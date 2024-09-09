@@ -69,86 +69,110 @@
     <h4>Implementation</h4>
 
     <p>
-      First, we find how much we can downscale, by a factor of 2, which was
-      recommended by one of the TAs during a project party.<br />
+      Initially, we extract the red, green, and blue images from the image file
+      and crop <b>10%</b> from each side. This is the method applied to both
+      pairs of (green, blue) and (red, blue).
+      <br />
+      First, I find how much we can downscale, by a factor of 2, which was
+      recommended by one of the TAs during a project party. I found that a
+      restricting our maximum downscale to a minimum size of 100 (of both width
+      and height dimensions) worked best.
+      <br />
 
-      Then,
+      Then, I downscaled my pair of images and applied naive align (same method
+      as the one used in my Naive Approach) with a search size of 15 on the pair.
+      Now, we need to upscale back to the original dimensions, which I do with
+      the same factor of 2. At each layer, I resize the images, double both
+      dimensions of my best shift so far, and then call naive align with a
+      search size of 20 for both x- and y- axis to readjust the best shift.
+      <br />
+
+      <b>Note</b>: The algorithm above produced <b>all</b> the images with
+      displacements shown below, <b>except</b> for emir, which I had to change.
+      One possible reason is that
     </p>
 
     <h2>Bells and Whistles</h2>
 
-    <h2>All Results</h2>
+    <h2>Pyramid Approach Results (without Bells and Whistles)</h2>
 
     <div class="image-container">
       <div class="image-item">
         <img
           src="media/pyramid_aligned/church_pyramid_aligned.jpg"
-          alt="Image 1"
+          alt="church_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (58, -4), Green - (25, 4)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
-          alt="Image 2"
+          alt="emir_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (TBD), Green - (TBD)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/harvesters_pyramid_aligned.jpg"
-          alt="Image 3"
+          alt="harvesters_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (124, 13), Green - (59, 16)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/icon_pyramid_aligned.jpg"
-          alt="Image 4"
+          alt="icon_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (89, 23), Green - (41, 17)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/lady_pyramid_aligned.jpg"
-          alt="Image 5"
+          alt="lady_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (108, 36), Green - (51, 26)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/melons_pyramid_aligned.jpg"
+          alt="melons_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (178, 13), Green - (81, 10)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/onion_church_pyramid_aligned.jpg"
-          alt="Image 6"
+          alt="onion_church_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (108, 36), Green - (51, 26)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/sculpture_pyramid_aligned.jpg"
-          alt="Image 7"
+          alt="sculpture_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (140, -27), Green - (51, 26)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/self_portrait_pyramid_aligned.jpg"
-          alt="Image 8"
+          alt="self_portrait_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (176, 37), Green - (78, 29)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/three_generations_pyramid_aligned.jpg"
-          alt="Image 9"
+          alt="three_generations_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (112, 11), Green - (53, 14)</p>
       </div>
       <div class="image-item">
         <img
           src="media/pyramid_aligned/train_pyramid_aligned.jpg"
-          alt="Image 10"
+          alt="train_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (), Green - ()</p>
+        <p>Displacement: Red - (87, 32), Green - (42, 5)</p>
       </div>
     </div>
   </body>
