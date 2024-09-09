@@ -16,14 +16,24 @@ body {
 
 .image-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  max-width: 100%;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
+  gap: 10px; /* Adds space between the grid items */
+  max-width: 100%; /* Makes the container responsive and flexible */
 }
 
-.image-container img {
+.image-item {
+  text-align: center; /* Center the text under each image */
+}
+
+.image-item img {
   width: 100%;
   height: auto;
   object-fit: cover;
   display: block;
+}
+
+.image-item p {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #333;
 }
