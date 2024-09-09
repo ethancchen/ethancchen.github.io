@@ -75,26 +75,33 @@
       <br />
       First, I find how much we can downscale, by a factor of 2, which was
       recommended by one of the TAs during a project party. I found that a
-      restricting our maximum downscale to a minimum size of 100 (of both width
-      and height dimensions) worked best.
+      restricting our maximum downscale to a minimum size of
+      <code>100</code> (of both width and height dimensions) worked best.
+      <br />
       <br />
 
       Then, I downscaled my pair of images and applied naive align (same method
-      as the one used in my Naive Approach) with a search size of 15 on the pair.
-      Now, we need to upscale back to the original dimensions, which I do with
-      the same factor of 2. At each layer, I resize the images, double both
+      as the one used in my Naive Approach) with a search size of 15 on the
+      pair. Now, we need to upscale back to the original dimensions, which I do
+      with the same factor of 2. At each layer, I resize the images, double both
       dimensions of my best shift so far, and then call naive align with a
       search size of 20 for both x- and y- axis to readjust the best shift.
       <br />
 
       <b>Note</b>: The algorithm above produced <b>all</b> the images with
-      displacements shown below, <b>except</b> for emir, which I had to change.
-      One possible reason is that
+      displacements shown below, <b>except</b> for emir.tif, which I had to
+      change the minimum size of downscaling to <code>200</code>. When I
+      displayed all raw tifs, I noticed that the contrast between the three red,
+      green, and blue components was much significant than it was for all other
+      images. The other three images had much more similarity amongst the red,
+      green, and blue components.
     </p>
 
     <h2>Bells and Whistles</h2>
 
-    <h2>Pyramid Approach Results (without Bells and Whistles)</h2>
+    <h2>Appendix</h2>
+
+    <h3>Pyramid Approach Results (without Bells and Whistles)</h3>
 
     <div class="image-container">
       <div class="image-item">
@@ -109,7 +116,7 @@
           src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
           alt="emir_pyramid_aligned.jpg"
         />
-        <p>Displacement: Red - (TBD), Green - (TBD)</p>
+        <p>Displacement: Red - (103, 55), Green - (49, 24)</p>
       </div>
       <div class="image-item">
         <img
