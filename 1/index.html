@@ -15,41 +15,50 @@
     </style>
   </head>
   <body>
-    <h1>Project 1 - Ethan Chen</h1>
+    <h1>Project 1 - Images of the Russian Empire</h1>
+
+    <h1>Ethan Chen</h1>
 
     <h2>Description</h2>
 
-    This project aims to...
+    <p>
+      This project aims to programatically apply image processing techniques on
+      photos from the Prokudin-Gorskii collection, primarily with a naive
+      approach then a pyramid approach, to produce an image with color.
+    </p>
 
     <h2>Naive Approach</h2>
 
-    First, we consider two optimization objectives...
+    <p>First, we consider two optimization objectives...</p>
     <br />
 
     We also crop.
     <br />
 
-    These are the JPG pictures generated with the naive approach.
+    <p>These are the JPG pictures generated with the naive approach.</p>
     <br />
 
-    <div class="row">
-      <div class="column">
+    <div class="image-container">
+      <div class="image-item">
         <img
           src="media/naive_aligned/cathedral_naive_aligned.jpg"
           alt="cathedral_naive_aligned.jpg"
         />
+        <p>Displacement: Red - (12, 3), Green - (5, 2)</p>
       </div>
-      <div class="column">
+      <div class="image-item">
         <img
           src="media/naive_aligned/monastery_naive_aligned.jpg"
-          alt="cathedral_naive_aligned.jpg"
+          alt="monastery_naive_aligned.jpg"
         />
+        <p>Displacement: Red - (3, 2), Green - (-3, 2)</p>
       </div>
-      <div class="column">
+      <div class="image-item">
         <img
           src="media/naive_aligned/tobolsk_naive_aligned.jpg"
-          alt="cathedral_naive_aligned.jpg"
+          alt="tobolsk_naive_aligned.jpg"
         />
+        <p>Displacement: Red - (6, 3), Green - (3, 3)</p>
       </div>
     </div>
 
@@ -59,81 +68,88 @@
 
     <h4>Implementation</h4>
 
+    <p>
+      First, we find how much we can downscale, by a factor of 2, which was
+      recommended by one of the TAs during a project party.<br />
+
+      Then,
+    </p>
+
+    <h2>Bells and Whistles</h2>
+
     <h2>All Results</h2>
 
-    <body>
-      <div class="image-container">
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/church_pyramid_aligned.jpg"
-            alt="Image 1"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
-            alt="Image 2"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/harvesters_pyramid_aligned.jpg"
-            alt="Image 3"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/icon_pyramid_aligned.jpg"
-            alt="Image 4"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/lady_pyramid_aligned.jpg"
-            alt="Image 5"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/onion_church_pyramid_aligned.jpg"
-            alt="Image 6"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/sculpture_pyramid_aligned.jpg"
-            alt="Image 7"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/self_portrait_pyramid_aligned.jpg"
-            alt="Image 8"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/three_generations_pyramid_aligned.jpg"
-            alt="Image 9"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
-        <div class="image-item">
-          <img
-            src="media/pyramid_aligned/train_pyramid_aligned.jpg"
-            alt="Image 10"
-          />
-          <p>Displacement: Red - (), Green - ()</p>
-        </div>
+    <div class="image-container">
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/church_pyramid_aligned.jpg"
+          alt="Image 1"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
       </div>
-    </body>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
+          alt="Image 2"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/harvesters_pyramid_aligned.jpg"
+          alt="Image 3"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/icon_pyramid_aligned.jpg"
+          alt="Image 4"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/lady_pyramid_aligned.jpg"
+          alt="Image 5"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/onion_church_pyramid_aligned.jpg"
+          alt="Image 6"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/sculpture_pyramid_aligned.jpg"
+          alt="Image 7"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/self_portrait_pyramid_aligned.jpg"
+          alt="Image 8"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/three_generations_pyramid_aligned.jpg"
+          alt="Image 9"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/train_pyramid_aligned.jpg"
+          alt="Image 10"
+        />
+        <p>Displacement: Red - (), Green - ()</p>
+      </div>
+    </div>
   </body>
 </html>
