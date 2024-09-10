@@ -83,7 +83,7 @@
     <h4>JPG pictures generated with the naive approach</h4>
     <br />
 
-    <div class="image-container">
+    <div class="image-container-3">
       <div class="image-item">
         <img
           src="media/naive_aligned/cathedral_naive_aligned.jpg"
@@ -143,6 +143,11 @@
       other images. This is due to the images not having the same brightness
       values. Other tifs had much more similarity amongst their three red,
       green, and blue channels.
+      <br />
+      <br />
+
+      You can see all the TIF images aligned with the pyramid algorithm in the
+      <b>Appendix</b>.
     </p>
 
     <h2>Bells and Whistles</h2>
@@ -153,11 +158,38 @@
       <li>Adaptive Histogram</li>
     </ol>
 
+    <h3>Adaptive Histogram</h3>
+
+    <p>
+      This is done after aliging the images with the pyramid algorithm. This
+      strategy enhances the contrast, as we can see in the comparison on below,
+      the color of his clothes is darker compared to the wall behind him; the
+      color of part of the door on the left and on the ground is also more
+      heavily contrasted with the lighter parts of the image.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
+          alt="emir_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (103, 55), Green - (49, 24)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/bells_and_whistles/emir_equalize_hist_pyramid_aligned.jpg"
+          alt="emir_equalize_hist_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (103, 55), Green - (49, 24)</p>
+      </div>
+    </div>
+
     <h2>Appendix</h2>
 
     <h3>Pyramid Approach Results (without Bells and Whistles)</h3>
 
-    <div class="image-container">
+    <div class="image-container-3">
       <div class="image-item">
         <img
           src="media/pyramid_aligned/church_pyramid_aligned.jpg"
