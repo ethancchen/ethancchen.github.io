@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <head>
+    <title>My Portfolio</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Project 1 - Images of the Russian Empire</h1>
+
+    <h1>Ethan Chen</h1>
+
+    <h2>Description</h2>
+
+    <p>
+      This project aims to programatically apply image processing techniques on
+      photos from the Prokudin-Gorskii collection, primarily with a naive
+      approach then a pyramid approach, to produce an image with color.
+    </p>
+
+    <h2>Naive Approach</h2>
+
+    <p>First, we consider two optimization objectives:</p>
+    <ol>
+      <li>
+        <b>Normalized Cross-Correlation (NCC)</b>: the dot product of two
+        normalized vectors
+      </li>
+      <li>
+        <b>Sum of Squared Differences (SSD)</b>: we use what's state in the name
+        to calculate this metric
+      </li>
+    </ol>
+
+    <p>
+      In the python notebook <code>main.ipynb</code>, we can see that the
+      displacement pairs for both aligning red and green channels with the blue
+      one are the same across all 3 JPGs. As expected and as a result, we don't
+      see any difference between the qualities of the three image pairs. We will
+      proceed with SSD as the metric since it requires fewer computations per
+      pair of images than NCC requires (also so we can follow Occam's razor).
+    </p>
+
+    <h3>Implementation</h3>
+
+    <p>
+      We can approach the 3 JPGs naively because they are small images so the
+      search space isn't too large for this brute force method and the algorithm
+      won't take long.
+      <br />
+      <br />
+      First, we extract an image for each of the red, green, blue channels from
+      the JPG. Then, we crop each with a 10% margin to avoid the edge artifacts
+      from impacting the brute force search. The borders don't contain useful
+      information and we don't want some pixels in our search box of all
+      possible shifts to find a best metric score, and thus alignment, with a
+      pixel in the edge.
+      <br />
+      <br />
+      Then, we search over the mentioned above box (with the same
+      <code>max_shift</code> for the x- and y-axis), compute the score on that
+      current shifted image and ultimately, choose the best shift (x, y) with
+      the best metric score. After, we use <code>np.roll()</code> on this best
+      shift to efficiently perform the shift to translate the original image,
+      <bold>not the cropped image</bold>. Finally, we stack the pre-cropped and
+      shifted images to get our final colored image.
+
+      <br />
+      <br />
+      Let's denote the search strategy of naive align on two images as
+      <code>naive_align</code>.
+    </p>
+
+    <h4>JPG pictures generated with the naive approach</h4>
+    <br />
+
+    <div class="image-container">
+      <div class="image-item">
+        <img
+          src="media/naive_aligned/cathedral_naive_aligned.jpg"
+          alt="cathedral_naive_aligned.jpg"
+        />
+        <p>Displacement: Red - (12, 3), Green - (5, 2)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/naive_aligned/monastery_naive_aligned.jpg"
+          alt="monastery_naive_aligned.jpg"
+        />
+        <p>Displacement: Red - (3, 2), Green - (-3, 2)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/naive_aligned/tobolsk_naive_aligned.jpg"
+          alt="tobolsk_naive_aligned.jpg"
+        />
+        <p>Displacement: Red - (6, 3), Green - (3, 3)</p>
+      </div>
+    </div>
+
+    <h2>Pyramid Approach</h2>
+
+    <h3>Motivation</h3>
+
+    <h4>Implementation</h4>
+
+    <p>
+      Initially, just like in naive align, we extract the red, green, and blue
+      images from the image file and crop <b>10%</b> from each side. This
+      pre-processing is applied to both calls to align pairs of (green, blue)
+      and (red, blue) in this pyramid approach.
+      <br />
+      Next, I find how much we can downscale, each time by a factor of 2, which
+      was recommended by one of the TAs during a project party. I found that a
+      restricting our maximum downscale to a minimum size of
+      <code>100</code> (of both width and height dimensions) worked best.
+      <br />
+      <br />
+
+      Then, I directly downscaled, without a loop, my pair of images by
+      <code>1/2 ^ {number of layers}</code> and applied naive align (same method
+      as the one used in my Naive Approach) with a search size of 15 on the
+      pair. Now, we need to upscale back to the original dimensions, which I do
+      with the same factor of 2. At each layer, I resize the images, double both
+      dimensions of my best shift so far, and then call naive align with a
+      search size (<code>max_shift</code>) of 20 to readjust the best shift.
+      <br />
+
+      <b>Note</b>: The algorithm above produced <b>all</b> the images with
+      displacements shown below, <b>except</b> for <code>emir.tif</code>, which
+      I had to change the minimum size of downscaling to <code>200</code>. When
+      I displayed all raw tifs, I noticed that the contrast between the three
+      red, green, and blue channels was much significant than it was for all
+      other images. This is due to the images not having the same brightness
+      values. Other tifs had much more similarity amongst their three red,
+      green, and blue channels.
+    </p>
+
+    <h2>Bells and Whistles</h2>
+
+    I tried several strategies to improve the quality of some images:
+
+    <ol>
+      <li>Adaptive Histogram</li>
+    </ol>
+
+    <h2>Appendix</h2>
+
+    <h3>Pyramid Approach Results (without Bells and Whistles)</h3>
+
+    <div class="image-container">
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/church_pyramid_aligned.jpg"
+          alt="church_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (58, -4), Green - (25, 4)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
+          alt="emir_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (103, 55), Green - (49, 24)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/harvesters_pyramid_aligned.jpg"
+          alt="harvesters_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (124, 13), Green - (59, 16)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/icon_pyramid_aligned.jpg"
+          alt="icon_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (89, 23), Green - (41, 17)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/lady_pyramid_aligned.jpg"
+          alt="lady_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (108, 36), Green - (51, 26)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/melons_pyramid_aligned.jpg"
+          alt="melons_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (178, 13), Green - (81, 10)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/onion_church_pyramid_aligned.jpg"
+          alt="onion_church_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (108, 36), Green - (51, 26)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/sculpture_pyramid_aligned.jpg"
+          alt="sculpture_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (140, -27), Green - (51, 26)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/self_portrait_pyramid_aligned.jpg"
+          alt="self_portrait_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (176, 37), Green - (78, 29)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/three_generations_pyramid_aligned.jpg"
+          alt="three_generations_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (112, 11), Green - (53, 14)</p>
+      </div>
+      <div class="image-item">
+        <img
+          src="media/pyramid_aligned/train_pyramid_aligned.jpg"
+          alt="train_pyramid_aligned.jpg"
+        />
+        <p>Displacement: Red - (87, 32), Green - (42, 5)</p>
+      </div>
+    </div>
+  </body>
+</html>

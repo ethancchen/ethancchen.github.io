@@ -1,0 +1,31 @@
+body {
+  font-family: Verdana, sans-serif;
+  font-size: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
+  gap: 10px; /* Adds space between the grid items */
+  max-width: 100%; /* Makes the container responsive and flexible */
+}
+
+.image-item {
+  text-align: center; /* Center the text under each image */
+}
+
+.image-item img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.image-item p {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #333;
+}
