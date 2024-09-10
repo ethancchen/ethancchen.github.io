@@ -8,13 +8,13 @@ body {
 
 .image-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
-  gap: 10px; /* Adds space between the grid items */
-  max-width: 100%; /* Makes the container responsive and flexible */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 100%;
 }
 
 .image-item {
-  text-align: center; /* Center the text under each image */
+  text-align: center;
 }
 
 .image-item img {
