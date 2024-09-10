@@ -29,13 +29,58 @@
 
     <h2>Naive Approach</h2>
 
-    <p>First, we consider two optimization objectives...</p>
-    <br />
+    <p>First, we consider two optimization objectives:</p>
+    <ol>
+      <li>
+        <b>Normalized Cross-Correlation (NCC)</b>: the dot product of two
+        normalized vectors
+      </li>
+      <li>
+        <b>Sum of Squared Differences (SSD)</b>: we use what's state in the name
+        to calculate this metric
+      </li>
+    </ol>
 
-    We also crop.
-    <br />
+    <p>
+      In the python notebook <code>main.ipynb</code>, we can see that the
+      displacement pairs for both aligning red and green channels with the blue
+      one are the same across all 3 JPGs. As expected and as a result, we don't
+      see any difference between the qualities of the three image pairs. We will
+      proceed with SSD as the metric since it requires fewer computations per
+      pair of images than NCC requires (also so we can follow Occam's razor).
+    </p>
 
-    <p>These are the JPG pictures generated with the naive approach.</p>
+    <h3>Implementation</h3>
+
+    <p>
+      We can approach the 3 JPGs naively because they are small images so the
+      search space isn't too large for this brute force method and the algorithm
+      won't take long.
+      <br />
+      <br />
+      First, we extract an image for each of the red, green, blue channels from
+      the JPG. Then, we crop each with a 10% margin to avoid the edge artifacts
+      from impacting the brute force search. The borders don't contain useful
+      information and we don't want some pixels in our search box of all
+      possible shifts to find a best metric score, and thus alignment, with a
+      pixel in the edge.
+      <br />
+      <br />
+      Then, we search over the mentioned above box (with the same
+      <code>max_shift</code> for the x- and y-axis), compute the score on that
+      current shifted image and ultimately, choose the best shift (x, y) with
+      the best metric score. After, we use <code>np.roll()</code> on this best
+      shift to efficiently perform the shift to translate the original image,
+      <bold>not the cropped image</bold>. Finally, we stack the pre-cropped and
+      shifted images to get our final colored image.
+
+      <br />
+      <br />
+      Let's denote the search strategy of naive align on two images as
+      <code>naive_align</code>.
+    </p>
+
+    <h4>JPG pictures generated with the naive approach</h4>
     <br />
 
     <div class="image-container">
@@ -69,35 +114,44 @@
     <h4>Implementation</h4>
 
     <p>
-      Initially, we extract the red, green, and blue images from the image file
-      and crop <b>10%</b> from each side. This is the method applied to both
-      pairs of (green, blue) and (red, blue).
+      Initially, just like in naive align, we extract the red, green, and blue
+      images from the image file and crop <b>10%</b> from each side. This
+      pre-processing is applied to both calls to align pairs of (green, blue)
+      and (red, blue) in this pyramid approach.
       <br />
-      First, I find how much we can downscale, by a factor of 2, which was
-      recommended by one of the TAs during a project party. I found that a
+      Next, I find how much we can downscale, each time by a factor of 2, which
+      was recommended by one of the TAs during a project party. I found that a
       restricting our maximum downscale to a minimum size of
       <code>100</code> (of both width and height dimensions) worked best.
       <br />
       <br />
 
-      Then, I downscaled my pair of images and applied naive align (same method
+      Then, I directly downscaled, without a loop, my pair of images by
+      <code>1/2 ^ {number of layers}</code> and applied naive align (same method
       as the one used in my Naive Approach) with a search size of 15 on the
       pair. Now, we need to upscale back to the original dimensions, which I do
       with the same factor of 2. At each layer, I resize the images, double both
       dimensions of my best shift so far, and then call naive align with a
-      search size of 20 for both x- and y- axis to readjust the best shift.
+      search size (<code>max_shift</code>) of 20 to readjust the best shift.
       <br />
 
       <b>Note</b>: The algorithm above produced <b>all</b> the images with
-      displacements shown below, <b>except</b> for emir.tif, which I had to
-      change the minimum size of downscaling to <code>200</code>. When I
-      displayed all raw tifs, I noticed that the contrast between the three red,
-      green, and blue components was much significant than it was for all other
-      images. The other three images had much more similarity amongst the red,
-      green, and blue components.
+      displacements shown below, <b>except</b> for <code>emir.tif</code>, which
+      I had to change the minimum size of downscaling to <code>200</code>. When
+      I displayed all raw tifs, I noticed that the contrast between the three
+      red, green, and blue channels was much significant than it was for all
+      other images. This is due to the images not having the same brightness
+      values. Other tifs had much more similarity amongst their three red,
+      green, and blue channels.
     </p>
 
     <h2>Bells and Whistles</h2>
+
+    I tried several strategies to improve the quality of some images:
+
+    <ol>
+      <li>Adaptive Histogram</li>
+    </ol>
 
     <h2>Appendix</h2>
 
