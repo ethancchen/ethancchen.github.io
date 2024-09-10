@@ -83,7 +83,7 @@
     <h4>JPG pictures generated with the naive approach</h4>
     <br />
 
-    <div class="image-container">
+    <div class="image-container-3">
       <div class="image-item">
         <img
           src="media/naive_aligned/cathedral_naive_aligned.jpg"
@@ -143,97 +143,260 @@
       other images. This is due to the images not having the same brightness
       values. Other tifs had much more similarity amongst their three red,
       green, and blue channels.
+      <br />
+      <br />
+
+      You can see all the TIF images from both the project spec (example ones)
+      and from what I self picked from the
+      <a
+        href="https://www.loc.gov/collections/prokudin-gorskii/?st=grid"
+        target="”_blank”"
+        >Library of Congress collection</a
+      >
+      - the images are aligned with the pyramid algorithm in the
+      <b>Appendix</b>.
     </p>
 
     <h2>Bells and Whistles</h2>
 
-    I tried several strategies to improve the quality of some images:
+    I tried two strategies to improve the quality of some images. Both of them
+    are done after aligning the images with the pyramid algorithm:
 
     <ol>
-      <li>Adaptive Histogram</li>
+      <li>Global Histogram Equalization</li>
+      <li>Adaptive Histogram Equalization</li>
     </ol>
+
+    <h3>Global Histogram Equalization</h3>
+
+    <p>
+      This strategy enhances the contrast of the pixels by redistributing value
+      intensities across the entire image.
+    </p>
+
+    <h3>Adaptive Histogram Equalization</h3>
+
+    <p>
+      This is better than global histogram equalization because it goes one step
+      further and limits the height of the histogram and redistributes pixels
+      uniformly to the rest of the bins. This improves the way we restrict the
+      amplification of noise.
+
+      <br />
+      <br />
+      As we can see in the comparison below, the color of his clothes is darker
+      compared to the wall behind him; the color of part of the door on the left
+      and on the ground is also more heavily contrasted with the lighter parts
+      of the image. Since both methods were applied after the image was aligned,
+      the displacement is the same for all 3 images.
+    </p>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Emir with only pyramid align</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
+            alt="emir_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (103, 55), Green - (49, 24)
+        </p>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Emir with Global Histogram Equalization</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/emir_equalize_hist_pyramid_aligned.jpg"
+            alt="emir_equalize_hist_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (103, 55), Green - (49, 24)
+        </p>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Emir with Adaptive Histogram Equalization</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/emir_equalize_adapthist_pyramid_aligned.jpg"
+            alt="emir_equalize_adapthist_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (103, 55), Green - (49, 24)
+        </p>
+      </div>
+    </div>
 
     <h2>Appendix</h2>
 
-    <h3>Pyramid Approach Results (without Bells and Whistles)</h3>
+    <h3>Pyramid Approach Results (Without Bells and Whistles)</h3>
 
-    <div class="image-container">
+    <h4>Example Images from the Project Spec</h4>
+
+    <div class="image-container-3">
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/church_pyramid_aligned.jpg"
-          alt="church_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (58, -4), Green - (25, 4)</p>
+        <h4 class="image-title">Church</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/church_pyramid_aligned.jpg"
+            alt="church_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (58, -4), Green - (25, 4)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
-          alt="emir_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (103, 55), Green - (49, 24)</p>
+        <h4 class="image-title">Emir</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/emir_pyramid_aligned.jpg"
+            alt="emir_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (103, 55), Green - (49, 24)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/harvesters_pyramid_aligned.jpg"
-          alt="harvesters_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (124, 13), Green - (59, 16)</p>
+        <h4 class="image-title">Harvesters</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/harvesters_pyramid_aligned.jpg"
+            alt="harvesters_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (124, 13), Green - (59, 16)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/icon_pyramid_aligned.jpg"
-          alt="icon_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (89, 23), Green - (41, 17)</p>
+        <h4 class="image-title">Icon</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/icon_pyramid_aligned.jpg"
+            alt="icon_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (89, 23), Green - (41, 17)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/lady_pyramid_aligned.jpg"
-          alt="lady_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (108, 36), Green - (51, 26)</p>
+        <h4 class="image-title">Lady</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/lady_pyramid_aligned.jpg"
+            alt="lady_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (112, 11), Green - (51, 9)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/melons_pyramid_aligned.jpg"
-          alt="melons_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (178, 13), Green - (81, 10)</p>
+        <h4 class="image-title">Melons</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/melons_pyramid_aligned.jpg"
+            alt="melons_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (178, 13), Green - (81, 10)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/onion_church_pyramid_aligned.jpg"
-          alt="onion_church_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (108, 36), Green - (51, 26)</p>
+        <h4 class="image-title">Onion Church</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/onion_church_pyramid_aligned.jpg"
+            alt="onion_church_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (108, 36), Green - (51, 26)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/sculpture_pyramid_aligned.jpg"
-          alt="sculpture_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (140, -27), Green - (51, 26)</p>
+        <h4 class="image-title">Sculpture</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/sculpture_pyramid_aligned.jpg"
+            alt="sculpture_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (140, -27), Green - (33, -11)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/self_portrait_pyramid_aligned.jpg"
-          alt="self_portrait_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (176, 37), Green - (78, 29)</p>
+        <h4 class="image-title">Self Portrait</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/self_portrait_pyramid_aligned.jpg"
+            alt="self_portrait_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (176, 37), Green - (78, 29)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/three_generations_pyramid_aligned.jpg"
-          alt="three_generations_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (112, 11), Green - (53, 14)</p>
+        <h4 class="image-title">Train</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/train_pyramid_aligned.jpg"
+            alt="train_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (87, 32), Green - (42, 5)
+        </p>
+      </div>
+    </div>
+
+    <h3>Images I chose</h3>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Adobe Building</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/adobe_building_pyramid_aligned.jpg"
+            alt="adobe_building_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (67, 11), Green - (21, 18)
+        </p>
       </div>
       <div class="image-item">
-        <img
-          src="media/pyramid_aligned/train_pyramid_aligned.jpg"
-          alt="train_pyramid_aligned.jpg"
-        />
-        <p>Displacement: Red - (87, 32), Green - (42, 5)</p>
+        <h4 class="image-title">House on Cliff</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/house_on_cliff_pyramid_aligned.jpg"
+            alt="house_on_cliff_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (75, -8), Green - (-2, 2)
+        </p>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Lilacs in Park</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/pyramid_aligned/lilacs_in_park_pyramid_aligned.jpg"
+            alt="lilacs_in_park_pyramid_aligned.jpg"
+          />
+        </div>
+        <p class="displacement-text">
+          Displacement: Red - (55, 46), Green - (31, 30)
+        </p>
       </div>
     </div>
   </body>
