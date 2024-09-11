@@ -36,8 +36,8 @@
         normalized vectors
       </li>
       <li>
-        <b>Sum of Squared Differences (SSD)</b>: we use what's state in the name
-        to calculate this metric
+        <b>Sum of Squared Differences (SSD)</b>: we use what's stated in the
+        name to calculate this metric
       </li>
     </ol>
 
@@ -66,9 +66,9 @@
       pixel in the edge.
       <br />
       <br />
-      Then, we search over the mentioned above box (with the same
-      <code>max_shift</code> for the x- and y-axis), compute the score on that
-      current shifted image and ultimately, choose the best shift (x, y) with
+      Then, we search over the mentioned above box of
+      <code>(-max_shift, max_shift)</code>, computing the score on each possible
+      shifted image and ultimately, choose the best shift (x, y) associated with
       the best metric score. After, we use <code>np.roll()</code> on this best
       shift to efficiently perform the shift to translate the original image,
       <bold>not the cropped image</bold>. Finally, we stack the pre-cropped and
@@ -80,7 +80,7 @@
       <code>naive_align</code>.
     </p>
 
-    <h4>JPG pictures generated with the naive approach</h4>
+    <h3>JPG pictures generated with the naive approach</h3>
     <br />
 
     <div class="image-container-3">
@@ -125,6 +125,15 @@
     <h2>Pyramid Approach</h2>
 
     <h3>Motivation</h3>
+
+    <p>
+      Since our TIF images are much larger than our JPGs, it's not efficient to
+      run naive align on TIFs. So we must come up with a faster algorithm –
+      multiscale pyramid – by downscaling our image to smaller dimensions, and
+      then choosing better alignment step-by-step as we scale back up to the
+      original size. This approach significantly reduces the time complexity
+      while still achieving good results.
+    </p>
 
     <h4>Implementation</h4>
 
