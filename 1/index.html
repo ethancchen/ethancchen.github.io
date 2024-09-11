@@ -183,12 +183,13 @@
 
     <h2>Bells and Whistles</h2>
 
-    I tried two strategies to improve the quality of some images. Both of them
-    are done after aligning the images with the pyramid algorithm:
+    I tried three strategies to improve the quality of some images. The first
+    two are done after aligning the images with the pyramid algorithm:
 
     <ol>
       <li>Global Histogram Equalization</li>
       <li>Adaptive Histogram Equalization</li>
+      <li>Sobel Edge Detection</li>
     </ol>
 
     <h3>Global Histogram Equalization</h3>
@@ -253,6 +254,14 @@
         </p>
       </div>
     </div>
+
+    <h3>Sobel Edge Detection</h3>
+
+    <p>
+      This method gave me only a slightly different green channel displacement
+      from (103, 55), produced by the pyramid approach without any bells or
+      whistles, to (107, 40).
+    </p>
 
     <h2>Appendix</h2>
 
