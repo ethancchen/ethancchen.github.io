@@ -6,6 +6,14 @@ body {
   padding: 0 5%;
 }
 
+/* CSS for `code` taken from past student Jeffrey Tan's submission */
+code {
+  background-color: aliceblue;
+  border-radius: 0.25rem;
+  padding: 0.15rem;
+  color: #0098f1;
+}
+
 .image-container-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
