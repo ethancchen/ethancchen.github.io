@@ -5,6 +5,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ["$", "$"],
+          ["\\(", "\\)"],
+        ],
+      },
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+  ></script>
   <head>
     <title>Proj 2</title>
     <style>
@@ -22,9 +41,11 @@
     <h2>Introduction</h2>
 
     <p>
-      This project aims to programatically apply image processing techniques on
-      photos from the Prokudin-Gorskii collection, primarily with a naive
-      approach then a pyramid approach, to produce an image with color.
+      This project aims to
+      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image
+      processing techniques on photos from the Prokudin-Gorskii collection,
+      primarily with a naive approach then a pyramid approach, to produce an
+      image with color.
     </p>
 
     <h2>Part 1: Fun with Filters</h2>
@@ -34,7 +55,9 @@
     <h3>Part 1.1: Finite Difference Operator</h3>
 
     <p>
-      Explain gradient and binarizing
+      Explain gradient and binarizing The partial derivativese in x and in y
+      show the intensity change in the horizontal and vertical directions,
+      respectively.
       <br />
       <br />
       How I chose threshold
@@ -53,6 +76,14 @@
     <h2>Part 2: Fun with Frequencies!</h2>
 
     <h3>Part 2.1: Image "Sharpening"</h3>
+
+    <p>
+      First, with the original image, we blur it (low-pass) with a Gaussian
+      filter individually to each RGB channel, effectively removing
+      high-frequency details like fine edges and textures. Then, we sharpen the
+      image through unsharp masking by multiplying the high-frequency parts with
+      a $\lambda$.
+    </p>
 
     <h3>Part 2.2: Hybrid Images</h3>
 
