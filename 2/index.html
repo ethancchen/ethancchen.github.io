@@ -157,12 +157,79 @@
     <h3>Part 2.1: Image "Sharpening"</h3>
 
     <p>
-      First, with the original image, we blur it (low-pass) with a Gaussian filter individually to each RGB channel,
-      effectively removing high-frequency details like fine edges and textures. Then, we sharpen the image through
-      unsharp masking by multiplying the high-frequency parts with a $\alpha$.
+      To sharpen an image, we first take the original image and blur each individual RGB channel with a low-pass
+      Gaussian filter, again effectively removing high-frequency details like fine edges and textures. Then, we take the
+      difference between the raw image and this blurred one to get the high frequencies. Then, we sharpen the image
+      through unsharp masking by adding back the high-frequency parts, which are first multiplied with a $\alpha$
+      factor. For all examples below, I blurred with the same <code>kernel_size = 10</code> and
+      <code>sigma = 10/6</code> from the earlier parts.
     </p>
 
-    <p>Look into https://scikit-image.org/docs/stable/auto_examples/filters/plot_unsharp_mask.html for more info.</p>
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Original Taj Mahal</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/taj.jpg" alt="taj.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blurred Taj Mahal</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_taj_blurred.jpg" alt="21_taj_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sharpened Taj Mahal ($\alpha = 0.75$)</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_taj_sharpened.jpg" alt="21_taj_sharpened.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h4>Two other examples</h4>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Original Campanile</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/campanile.jpg" alt="campanile.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blurred Campanile</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_campanile_blurred.jpg" alt="21_campanile_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sharpened Campanile ($\alpha = 1.25$)</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_campanile_sharpened.jpg" alt="21_campanile_sharpened.jpg" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Original Pragser Wildsee</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/pragser_wildsee.jpg" alt="pragser_wildsee.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blurred Pragser Wildsee</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_pragser_wildsee_blurred.jpg" alt="21_pragser_wildsee_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sharpened Pragser Wildsee ($\alpha = 0.75$)</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_pragser_wildsee_sharpened.jpg" alt="21_pragser_wildsee_sharpened.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>We can see that the image sharpening technique performed decently well on all 3 images.</p>
 
     <h3>Part 2.2: Hybrid Images</h3>
 
