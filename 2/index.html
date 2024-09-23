@@ -86,21 +86,54 @@
     <h3>Part 1.2: Derivative of Gaussian (DoG) Filter</h3>
 
     <p>
-      Now, we can create and use a derivative of Gaussian filter to convolve the image. Slide 33 of our lecture on
+      Now, we can create and use a derivative of Gaussian filter to convolve the image. First, we blur the image with a
+      Gaussian filter. Slide 33 of our lecture on
       <strong>Image Processing II: Convolution and Derivatives</strong> shared a rule of thumb of choosing a half-width
       of 3$\sigma$ so I chose 6 as the multiplication factor so I chose <code>kernel_size = 10</code> and
-      <code>sigma = 10/6</code>. The <code>sigma</code> is chosen after some manual checks.
+      <code>sigma = 10/6</code>. The <code>sigma</code> was chosen after some manual checks. For both images, I chose
+      <code>threshold = 0.07</code>.
     </p>
+
+    <h4>Images after initially blurring the cameraman image</h4>
 
     <div class="image-container-4">
       <div class="image-item">
-        <h4 class="image-title">Partial Derivative in x (with DoG filter)</h4>
+        <h4 class="image-title">Partial Derivative in x</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_x_blurred.jpg" alt="12_partial_x_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in y</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_y_blurred.jpg" alt="12_partial_y_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gradient Magnitude</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_gradient_magnitude_blurred.jpg" alt="12_gradient_magnitude_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Edge Image</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_edge_image_blurred.jpg" alt="12_edge_image_blurred.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h4>Images with DoG filter</h4>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in x</h4>
         <div class="image-wrapper">
           <img src="media/part12/12_partial_x_DoG.jpg" alt="12_partial_x_DoG.jpg" />
         </div>
       </div>
       <div class="image-item">
-        <h4 class="image-title">Partial Derivative in y (with DoG filter)</h4>
+        <h4 class="image-title">Partial Derivative in y</h4>
         <div class="image-wrapper">
           <img src="media/part12/12_partial_y_DoG.jpg" alt="12_partial_y_DoG.jpg" />
         </div>
