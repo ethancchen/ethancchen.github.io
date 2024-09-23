@@ -42,9 +42,9 @@
 
     <p>
       This project aims to
-      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image processing techniques on
-      photos from the Prokudin-Gorskii collection, primarily with a naive approach then a pyramid
-      approach, to produce an image with color.
+      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image processing techniques on photos from the
+      Prokudin-Gorskii collection, primarily with a naive approach then a pyramid approach, to produce an image with
+      color.
     </p>
 
     <h2>Part 1: Fun with Filters</h2>
@@ -54,20 +54,21 @@
     <h3>Part 1.1: Finite Difference Operator</h3>
 
     <p>
-      Explain gradient and binarizing The partial derivativese in x and in y show the intensity
-      change in the horizontal and vertical directions, respectively.
-      <br />
-      <br />
-      How I chose threshold
+      In this part, we aim to construct an edge image with a Gaussian kernel. To find the partial derivative in x and y
+      (which show the intensity change in the horizontal and vertical directions, respectively), we first convolve the
+      image with the finite difference operators
+      <code>D_x = [1, -1]</code> and <code>D_y = [1, -1]^T</code>. I chose a Visually looking at the image, I decided
+      that a <code>threshold = 0.2</code> looked the best. This highlghted the high frequencies of the image without
+      including too much noise, which would clutter the binarized edge image.
     </p>
 
     <h3>Part 1.2: Derivative of Gaussian (DoG) Filter</h3>
 
     <p>
-      Explain strategy
-      <br />
-      <br />
-      How I chose kernel size and sigma (what's sigma used for), using 6 is rule of thumb
+      Now, we can create and use a derivative of Gaussian filter to convolve the image. Slide 33 of our lecture on
+      <strong>Image Processing II: Convolution and Derivatives</strong> shared a rule of thumb of choosing a half-width
+      of 3$\sigma$ so I chose 6 as the multiplication factor so I chose <code>sigma = 6</code> and
+      <code>kernel_size = 6 * sigma</code>. The <code>sigma</code> is chosen after some manual checks.
     </p>
 
     <h2>Part 2: Fun with Frequencies!</h2>
@@ -75,16 +76,12 @@
     <h3>Part 2.1: Image "Sharpening"</h3>
 
     <p>
-      First, with the original image, we blur it (low-pass) with a Gaussian filter individually to
-      each RGB channel, effectively removing high-frequency details like fine edges and textures.
-      Then, we sharpen the image through unsharp masking by multiplying the high-frequency parts
-      with a $\alpha$.
+      First, with the original image, we blur it (low-pass) with a Gaussian filter individually to each RGB channel,
+      effectively removing high-frequency details like fine edges and textures. Then, we sharpen the image through
+      unsharp masking by multiplying the high-frequency parts with a $\alpha$.
     </p>
 
-    <p>
-      Look into https://scikit-image.org/docs/stable/auto_examples/filters/plot_unsharp_mask.html
-      for more info.
-    </p>
+    <p>Look into https://scikit-image.org/docs/stable/auto_examples/filters/plot_unsharp_mask.html for more info.</p>
 
     <h3>Part 2.2: Hybrid Images</h3>
 
@@ -95,8 +92,8 @@
     <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
 
     <p>
-      Gaussian stack Laplacian stack Normalize Both can clip even though the code to display images
-      automatically clips for us.
+      Gaussian stack Laplacian stack Normalize Both can clip even though the code to display images automatically clips
+      for us.
     </p>
 
     <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
@@ -109,14 +106,14 @@
     </div>
 
     <p>
-      We export the mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as
-      PNG will give 4 channels.
+      We export the mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as PNG will give 4
+      channels.
       <br />
       <br />
 
-      We blend Curry's face onto LeBron's since the Curry's face is larger than LeBron's in the
-      aligned images. The quality of all 5 images below is not high. We will use higher quality
-      examples below to better illustrate the results.
+      We blend Curry's face onto LeBron's since the Curry's face is larger than LeBron's in the aligned images. The
+      quality of all 5 images below is not high. We will use higher quality examples below to better illustrate the
+      results.
     </p>
 
     <div class="image-container-2">
@@ -168,10 +165,7 @@
       <div class="image-item">
         <h4 class="image-title">Aligned Barcelona Skyline</h4>
         <div class="image-wrapper">
-          <img
-            src="media/output/barcelona_skyline_aligned.jpg"
-            alt="barcelona_skyline_aligned.jpg"
-          />
+          <img src="media/output/barcelona_skyline_aligned.jpg" alt="barcelona_skyline_aligned.jpg" />
         </div>
       </div>
       <div class="image-item">
@@ -192,8 +186,9 @@
     </div>
 
     <p>
-      The blended image above has rather abrupt changes from bright buildings to ones in the night
-      time. Also, the dark patches in some of Barcelona's city view are awkward. The shadow makes it feel like some clouds are hovering over Barcelona's buildings near the blurred edge.
+      The blended image above has rather abrupt changes from bright buildings to ones in the night time. Also, the dark
+      patches in some of Barcelona's city view are awkward. The shadow makes it feel like some clouds are hovering over
+      Barcelona's buildings near the blurred edge.
     </p>
 
     <div class="image-container-2">
@@ -212,10 +207,7 @@
       <div class="image-item">
         <h4 class="image-title">Aligned Barcelona Night Sky</h4>
         <div class="image-wrapper">
-          <img
-            src="media/output/barcelona_night_sky_aligned.jpg"
-            alt="barcelona_night_sky_aligned.jpg"
-          />
+          <img src="media/output/barcelona_night_sky_aligned.jpg" alt="barcelona_night_sky_aligned.jpg" />
         </div>
       </div>
       <div class="image-item">
@@ -235,9 +227,7 @@
       </div>
     </div>
 
-    <p>
-      The blended image now has less sudden changes from one image to another. 
-    </p>
+    <p>The blended image now has less sudden changes from one image to another.</p>
 
     <h3>Bells & Whistles</h3>
 
