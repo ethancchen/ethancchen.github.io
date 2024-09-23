@@ -62,6 +62,27 @@
       including too much noise, which would clutter the binarized edge image.
     </p>
 
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in x</h4>
+        <div class="image-wrapper">
+          <img src="media/part11/11_partial_x.jpg" alt="11_partial_x.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in y</h4>
+        <div class="image-wrapper">
+          <img src="media/part11/11_partial_y.jpg" alt="11_partial_y.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Binarized Edge Image</h4>
+        <div class="image-wrapper">
+          <img src="media/part11/11_edge_image.jpg" alt="11_edge_image.jpg" />
+        </div>
+      </div>
+    </div>
+
     <h3>Part 1.2: Derivative of Gaussian (DoG) Filter</h3>
 
     <p>
@@ -70,6 +91,33 @@
       of 3$\sigma$ so I chose 6 as the multiplication factor so I chose <code>sigma = 6</code> and
       <code>kernel_size = 6 * sigma</code>. The <code>sigma</code> is chosen after some manual checks.
     </p>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in x (with DoG filter)</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_x_DoG.jpg" alt="12_partial_x_DoG.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in y (with DoG filter)</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_y_DoG.jpg" alt="12_partial_y_DoG.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gradient Magnitude</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_gradient_magnitude_DoG.jpg" alt="12_gradient_magnitude_DoG.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Edge Image</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_edge_image_DoG.jpg" alt="12_edge_image_DoG.jpg" />
+        </div>
+      </div>
+    </div>
 
     <h2>Part 2: Fun with Frequencies!</h2>
 
@@ -232,5 +280,12 @@
     <h3>Bells & Whistles</h3>
 
     <h2>Reflection</h2>
+
+    <p>
+      I enjoyed working on all parts of this project, specifically the image sharpening part because it brought out some
+      details of the image that I wouldn't have noticed at first. It also feels intriguing to see algorithms being able
+      to extract details that don't seem possible to do so when looking at the blurred image with a naked eye. It was
+      also fun to choose my own images for multiresolution blending.
+    </p>
   </body>
 </html>
