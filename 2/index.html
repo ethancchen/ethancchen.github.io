@@ -42,10 +42,9 @@
 
     <p>
       This project aims to
-      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image
-      processing techniques on photos from the Prokudin-Gorskii collection,
-      primarily with a naive approach then a pyramid approach, to produce an
-      image with color.
+      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image processing techniques on
+      photos from the Prokudin-Gorskii collection, primarily with a naive approach then a pyramid
+      approach, to produce an image with color.
     </p>
 
     <h2>Part 1: Fun with Filters</h2>
@@ -55,9 +54,8 @@
     <h3>Part 1.1: Finite Difference Operator</h3>
 
     <p>
-      Explain gradient and binarizing The partial derivativese in x and in y
-      show the intensity change in the horizontal and vertical directions,
-      respectively.
+      Explain gradient and binarizing The partial derivativese in x and in y show the intensity
+      change in the horizontal and vertical directions, respectively.
       <br />
       <br />
       How I chose threshold
@@ -69,8 +67,7 @@
       Explain strategy
       <br />
       <br />
-      How I chose kernel size and sigma (what's sigma used for), using 6 is rule
-      of thumb
+      How I chose kernel size and sigma (what's sigma used for), using 6 is rule of thumb
     </p>
 
     <h2>Part 2: Fun with Frequencies!</h2>
@@ -78,16 +75,14 @@
     <h3>Part 2.1: Image "Sharpening"</h3>
 
     <p>
-      First, with the original image, we blur it (low-pass) with a Gaussian
-      filter individually to each RGB channel, effectively removing
-      high-frequency details like fine edges and textures. Then, we sharpen the
-      image through unsharp masking by multiplying the high-frequency parts with
-      a $\alpha$.
+      First, with the original image, we blur it (low-pass) with a Gaussian filter individually to
+      each RGB channel, effectively removing high-frequency details like fine edges and textures.
+      Then, we sharpen the image through unsharp masking by multiplying the high-frequency parts
+      with a $\alpha$.
     </p>
 
     <p>
-      Look into
-      https://scikit-image.org/docs/stable/auto_examples/filters/plot_unsharp_mask.html
+      Look into https://scikit-image.org/docs/stable/auto_examples/filters/plot_unsharp_mask.html
       for more info.
     </p>
 
@@ -100,8 +95,8 @@
     <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
 
     <p>
-      Gaussian stack Laplacian stack Normalize Both can clip even though the
-      code to display images automatically clips for us.
+      Gaussian stack Laplacian stack Normalize Both can clip even though the code to display images
+      automatically clips for us.
     </p>
 
     <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
@@ -109,19 +104,53 @@
     <div class="image-container-1">
       <div class="image-item">
         <h4 class="image-title">Blended Oraple</h4>
-        <img src="media/oraple.jpg" alt="oraple.jpg" />
+        <img src="media/output/oraple.jpg" alt="oraple.jpg" />
       </div>
     </div>
 
     <p>
-      We export the mask image from Adobe Photoshop as JPG so our image has 3
-      channels. Exporting as PNG will give 4 channels.
+      We export the mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as
+      PNG will give 4 channels.
       <br />
       <br />
 
-      We blend Curry's face onto LeBron's since the Curry's face is larger than
-      LeBron's in the aligned images.
+      We blend Curry's face onto LeBron's since the Curry's face is larger than LeBron's in the
+      aligned images. The quality of all 5 images below is not high. We will use higher quality
+      examples below to better illustrate the results.
     </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">LeBron James</h4>
+        <div class="image-wrapper">
+          <img src="media/input/lebron.jpg" alt="lebron.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Steph Curry</h4>
+        <div class="image-wrapper">
+          <img src="media/input/curry.jpg" alt="curry.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned LeBron James</h4>
+        <div class="image-wrapper">
+          <img src="media/output/lebron_aligned.jpg" alt="lebron_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Steph Curry</h4>
+        <div class="image-wrapper">
+          <img src="media/output/curry_aligned.jpg" alt="curry_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blended Image with Steph Curry's face onto LeBron James</h4>
+        <div class="image-wrapper">
+          <img src="media/output/blended_curry_lebron.jpg" alt="blended_curry_lebron.jpg" />
+        </div>
+      </div>
+    </div>
 
     <h3>Bells & Whistles</h3>
 

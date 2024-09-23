@@ -27,9 +27,10 @@ code {
 
 .image-container-2 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(calc(50% - 10px), 1fr));
   gap: 20px;
   max-width: 100%;
+  justify-content: center;
 }
 
 .image-container-3 {
