@@ -85,6 +85,12 @@
       a $\alpha$.
     </p>
 
+    <p>
+      Look into
+      https://scikit-image.org/docs/stable/auto_examples/filters/plot_unsharp_mask.html
+      for more info.
+    </p>
+
     <h3>Part 2.2: Hybrid Images</h3>
 
     <h3>Bells & Whistles</h3>
@@ -93,8 +99,38 @@
 
     <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
 
+    <p>
+      Gaussian stack Laplacian stack Normalize Both can clip even though the
+      code to display images automatically clips for us.
+    </p>
+
     <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
 
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">Blended Oraple</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/oraple.jpg"
+            alt="oraple.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      We export the mask image from Adobe Photoshop as JPG so our image has 3
+      channels. Exporting as PNG will give 4 channels.
+      <br />
+      <br />
+
+      We blend Curry's face onto LeBron's since the Curry's face is larger than
+      LeBron's in the aligned images.
+    </p>
+
+
     <h3>Bells & Whistles</h3>
+
+    <h2>Reflection</h2>
   </body>
 </html>
