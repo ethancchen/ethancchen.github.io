@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ["$", "$"],
+          ["\\(", "\\)"],
+        ],
+      },
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+  ></script>
+  <head>
+    <title>Proj 2</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Project 2 - Fun with Filters and Frequencies!</h1>
+
+    <h3>By Ethan Chen</h3>
+
+    <h2>Introduction</h2>
+
+    <p>
+      This project aims to
+      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image processing techniques on
+      photos from the Prokudin-Gorskii collection, primarily with a naive approach then a pyramid
+      approach, to produce an image with color.
+    </p>
+
+    <h2>Part 1: Fun with Filters</h2>
+
+    <h3>Goals</h3>
+
+    <h3>Part 1.1: Finite Difference Operator</h3>
+
+    <p>
+      In this part, we aim to construct an edge image with a Gaussian kernel. To find the partial
+      derivative in x and y (which show the intensity change in the horizontal and vertical
+      directions, respectively), we first convolve the image with the finite difference operators
+      <code>D_x = [1, -1]</code> and <code>D_y = [1, -1]^T</code>. I chose a Visually looking at the
+      image, I decided that a <code>threshold = 0.2</code> looked the best. This highlghted the high
+      frequencies of the image without including too much noise, which would clutter the binarized
+      edge image.
+    </p>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in x</h4>
+        <div class="image-wrapper">
+          <img src="media/part11/11_partial_x.jpg" alt="11_partial_x.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in y</h4>
+        <div class="image-wrapper">
+          <img src="media/part11/11_partial_y.jpg" alt="11_partial_y.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Binarized Edge Image</h4>
+        <div class="image-wrapper">
+          <img src="media/part11/11_edge_image.jpg" alt="11_edge_image.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.2: Derivative of Gaussian (DoG) Filter</h3>
+
+    <p>
+      Now, we can create and use a derivative of Gaussian filter to convolve the image. First, we
+      blur the image with a Gaussian filter. Slide 33 of our lecture on
+      <strong>Image Processing II: Convolution and Derivatives</strong> shared a rule of thumb of
+      choosing a half-width of 3$\sigma$ so I chose 6 as the multiplication factor so I chose
+      <code>kernel_size = 10</code> and <code>sigma = 10/6</code>. The <code>sigma</code> was chosen
+      after some manual checks. For both images, I chose <code>threshold = 0.07</code>.
+    </p>
+
+    <h4>Images after initially blurring the cameraman image</h4>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in x</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_x_blurred.jpg" alt="12_partial_x_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in y</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_y_blurred.jpg" alt="12_partial_y_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gradient Magnitude</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part12/12_gradient_magnitude_blurred.jpg"
+            alt="12_gradient_magnitude_blurred.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Edge Image</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_edge_image_blurred.jpg" alt="12_edge_image_blurred.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h4>Images with DoG filter</h4>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in x</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_x_DoG.jpg" alt="12_partial_x_DoG.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Partial Derivative in y</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_partial_y_DoG.jpg" alt="12_partial_y_DoG.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gradient Magnitude</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part12/12_gradient_magnitude_DoG.jpg"
+            alt="12_gradient_magnitude_DoG.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Edge Image</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_edge_image_DoG.jpg" alt="12_edge_image_DoG.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h2>Part 2: Fun with Frequencies!</h2>
+
+    <h3>Part 2.1: Image "Sharpening"</h3>
+
+    <p>
+      To sharpen an image, we first take the original image and blur each individual RGB channel
+      with a low-pass Gaussian filter, again effectively removing high-frequency details like fine
+      edges and textures. Then, we take the difference between the raw image and this blurred one to
+      get the high frequencies. Then, we sharpen the image through unsharp masking by adding back
+      the high-frequency parts, which are first multiplied with a $\alpha$ factor. For all examples
+      below, I blurred with the same <code>kernel_size = 10</code> and
+      <code>sigma = 10/6</code> from the earlier parts.
+    </p>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Original Taj Mahal</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/taj.jpg" alt="taj.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blurred Taj Mahal</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_taj_blurred.jpg" alt="21_taj_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sharpened Taj Mahal ($\alpha = 0.75$)</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_taj_sharpened.jpg" alt="21_taj_sharpened.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h4>Two other examples</h4>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Original Campanile</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/campanile.jpg" alt="campanile.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blurred Campanile</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_campanile_blurred.jpg" alt="21_campanile_blurred.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sharpened Campanile ($\alpha = 1.25$)</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/21_campanile_sharpened.jpg" alt="21_campanile_sharpened.jpg" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Original Pragser Wildsee</h4>
+        <div class="image-wrapper">
+          <img src="media/part21/pragser_wildsee.jpg" alt="pragser_wildsee.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blurred Pragser Wildsee</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part21/21_pragser_wildsee_blurred.jpg"
+            alt="21_pragser_wildsee_blurred.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sharpened Pragser Wildsee ($\alpha = 0.75$)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part21/21_pragser_wildsee_sharpened.jpg"
+            alt="21_pragser_wildsee_sharpened.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>We can see that the image sharpening technique performed decently well on all 3 images.</p>
+
+    <h3>Part 2.2: Hybrid Images</h3>
+
+    <p>
+      In this part, we aim to take the frequencies of a low-frequency image and apply them to a
+      high-frequency image. In the first example, we align Nutmeg onto Professor Derek Hoiem. As
+      expected, the aligned picture of Prof. Hoiem is the same as the original iamge since we're
+      just aligning and adjusting Nutmeg to Prof. Hoeim. We obtain the grayscale aligned images by
+      calling <code>rgb2gray</code> from <code>skimage.color</code> on the corresponding aligned
+      image.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Nutmeg</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/nutmeg.jpg" alt="nutmeg.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Derek Hoiem</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/DerekPicture.jpg" alt="DerekPicture.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Nutmeg</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/22_nutmeg_aligned.jpg" alt="22_nutmeg_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Derek Hoiem</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/22_DerekPicture_aligned.jpg" alt="22_DerekPicture_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Grayscale Nutmeg</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/22_nutmeg_aligned_grayscale.jpg" alt="22_nutmeg_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Grayscale Derek Hoiem</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_DerekPicture_grayscale_aligned.jpg"
+            alt="22_DerekPicture_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Nutmeg and Derek Both Grayscale Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_DerekPicture_grayscale_hybrid_image.jpg"
+            alt="22_nutmeg_DerekPicture_grayscale_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h4>Another example</h4>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Snowboarder</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/snowboarder_jumping.jpg"
+            alt="snowboarder_jumping.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Skier</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/skier_jumping.jpg" alt="skier_jumping.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Snowboarder</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_snowboarder_jumping_aligned.jpg"
+            alt="22_snowboarder_jumping_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Skier</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_skier_jumping_aligned.jpg"
+            alt="22_skier_jumping_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Snowboarder and Skier Both Grayscale Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_snowboarder_jumping_skier_jumping_grayscale_hybrid_image.jpg"
+            alt="22_snowboarder_jumping_skier_jumping_grayscale_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Favorite Example: Frequency Analysis</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Snowboarder</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_frequency_img_snowboarder.jpg"
+            alt="22_frequency_img_snowboarder.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Skier</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/22_frequency_img_skier.jpg" alt="22_frequency_img_skier.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Snowboarder</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_frequency_snowboarder_aligned.jpg"
+            alt="22_frequency_snowboarder_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Skier</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_frequency_skier_aligned.jpg"
+            alt="22_frequency_skier_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Snowboarder and Skier Both Grayscale Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_frequency_snowboarder_skier_hybrid_image.jpg"
+            alt="22_frequency_snowboarder_skier_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Bells & Whistles</h3>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Both Color Nutmeg and Derek Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_DerekPicture_hybrid_image.jpg"
+            alt="22_nutmeg_DerekPicture_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Color Nutmeg and Grayscale Derek Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_aligned_regular_DerekPicture_aligned_grayscale_hybrid_image.jpg"
+            alt="22_nutmeg_aligned_regular_DerekPicture_aligned_grayscale_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Grayscale Nutmeg and Regular Derek Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_aligned_grayscale_DerekPicture_aligned_regular_hybrid_image.jpg"
+            alt="22_nutmeg_aligned_grayscale_DerekPicture_aligned_regular_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      We can see that using both color aligned images of nutmeg and image of Prof. Hoiem generated
+      <strong>and</strong> color aligned image of nutmeg and grayscale aligned image of Prof. Hoiem
+      generated decent results - the hybrid image has a nice contrast and retains the color of Prof.
+      Hoiem's face while including the high frequencies (edges) from nutmeg.
+    </p>
+
+    <h2>Multi-resolution Blending and the Oraple journey</h2>
+
+    <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
+
+    <p>
+      To set up for the multiresolution blending in Part 2.4, we will first obtain the Gaussian and
+      Laplacian stack of the apple image and orange image individually. For both stacks, we go to
+      <code>num_levels = 5</code>.
+      <br />
+      <br />
+      To get the Gaussian stack, at each level, we blur the image from the previous level (at the
+      first level, we start with the original image) with the Gaussian filter, like before. For both
+      images, I used <code>sigma = 4</code> and <code>kernel_size = 6 * 4 = 24</code>.
+      <br />
+      <br />
+      To get the Laplacian stack, we take the delta between the previous and current layer in the
+      Gaussian stack and normalize this delta. At the end of the stack, we add the last level from
+      the Gaussian stack (no delta here).
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Orange</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part24/orange.jpeg"
+            alt="orange.jpeg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Appl</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part24/apple.jpeg"
+            alt="apple.jpeg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Apple Gaussian and Laplacian Stack</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part23/23_apple_gaussian_laplacian_stack.jpg"
+            alt="23_apple_gaussian_laplacian_stack.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Orange Gaussian and Laplacian Stack</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part23/23_orange_gaussian_laplacian_stack.jpg"
+            alt="23_orange_gaussian_laplacian_stack.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
+
+    <p>
+      Now, we can use the Guassian and Laplacian stacks to blend our apple and orange images into an
+      oraple. To blend, we create a blurred mask of the same shape as both input images to create a
+      smoother final image. For oraple, the mask is split vertically, with the left half completely
+      white and the right half completely black, as shown below. Similar to what we do for the two
+      input images, we also create a Gaussian stack for the blurred mask.
+    </p>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">Mask for Oraple</h4>
+        <img src="media/part24/24_mask_oraple.jpg" alt="oraple.jpg" />
+      </div>
+    </div>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">Blended Oraple</h4>
+        <img src="media/output/oraple.jpg" alt="oraple.jpg" />
+      </div>
+    </div>
+
+    <h3>Irregular masks</h3>
+
+    <p>
+      For irregular masks, we can create them using Adobe Photoshop - there is a convenient
+      selection tool that we can use to highlight the entire image and automatically get a selected
+      region to create a mask from. Then, we can export this mask. Note that we should export the
+      mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as PNG will give
+      use 4 channels, which is inconsistent with the input images like orange and apple.
+      <br />
+      <br />
+
+      In the first example, we blend Steph Curry's face onto LeBron James's. I chose to not do this
+      the flipped way because the Curry's face is larger than LeBron's in the aligned images so
+      LeBron's face would less clear in the blended image. The quality of all 5 images below is not
+      high. We will use higher quality examples below to better illustrate the results.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">LeBron James</h4>
+        <div class="image-wrapper">
+          <img src="media/input/lebron.jpg" alt="lebron.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Steph Curry</h4>
+        <div class="image-wrapper">
+          <img src="media/input/curry.jpg" alt="curry.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned LeBron James</h4>
+        <div class="image-wrapper">
+          <img src="media/output/lebron_aligned.jpg" alt="lebron_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Steph Curry</h4>
+        <div class="image-wrapper">
+          <img src="media/output/curry_aligned.jpg" alt="curry_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Mask of Aligned Steph Curry</h4>
+        <div class="image-wrapper">
+          <img src="media/part24/curry_aligned_mask.jpg" alt="curry_aligned_mask.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blended Image of Steph Curry's face onto LeBron James</h4>
+        <div class="image-wrapper">
+          <img src="media/output/blended_curry_lebron.jpg" alt="blended_curry_lebron.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Barcelona Skyline</h4>
+        <div class="image-wrapper">
+          <img src="media/input/barcelona_skyline.jpg" alt="barcelona_skyline.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">SF Night Sky</h4>
+        <div class="image-wrapper">
+          <img src="media/input/sf_night_sky.jpg" alt="sf_night_sky.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Barcelona Skyline</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output/barcelona_skyline_aligned.jpg"
+            alt="barcelona_skyline_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned SF Night Sky</h4>
+        <div class="image-wrapper">
+          <img src="media/output/sf_night_sky_aligned.jpg" alt="sf_night_sky_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Mask of Aligned Barcelona Skyline</h4>
+        <div class="image-wrapper">
+          <img src="media/part24/barcelona_skyline_aligned_mask.jpg" alt="barcelona_skyline_aligned_mask.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blended Image of Barcelona's Skyline with SF Night Sky</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output/blended_barcelona_skyline_sf_night_sky.jpg"
+            alt="blended_barcelona_skyline_sf_night_sky.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The blended image above has rather abrupt changes from bright buildings to ones in the night
+      time. Also, the dark patches in some of Barcelona's city view are awkward. The shadow makes it
+      feel like some clouds are hovering over Barcelona's buildings near the blurred edge.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Barcelona Night Sky</h4>
+        <div class="image-wrapper">
+          <img src="media/input/barcelona_night_sky.jpg" alt="barcelona_night_sky.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">SF Night Sky</h4>
+        <div class="image-wrapper">
+          <img src="media/input/sf_night_sky.jpg" alt="sf_night_sky.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Barcelona Night Sky</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output/barcelona_night_sky_aligned.jpg"
+            alt="barcelona_night_sky_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned SF Night Sky</h4>
+        <div class="image-wrapper">
+          <img src="media/output/sf_night_sky_aligned.jpg" alt="sf_night_sky_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Mask of Aligned Barcelona Night Sky</h4>
+        <div class="image-wrapper">
+          <img src="media/part24/barcelona_night_sky_aligned_mask.jpg" alt="barcelona_night_sky_aligned_mask.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Blended Image of Barcelona's Night Sky with SF Night Sky</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output/blended_barcelona_night_sky_sf_night_sky.jpg"
+            alt="blended_barcelona_night_sky_sf_night_sky.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h4>Here are the Gaussian and Laplacian stacks for the Barcelona and SF night sky images.</h4>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Barcelona Night Sky Gaussian and Laplacian Stack</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part24/24_barcelona_night_sky_gaussian_laplacian_stack.jpg"
+            alt="24_barcelona_night_sky_gaussian_laplacian_stack.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">SF Night Sky Gaussian and Laplacian Stack</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part24/24_sf_night_sky_gaussian_laplacian_stack.jpg"
+            alt="24_sf_night_sky_gaussian_laplacian_stack.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>The blended image now has less sudden changes from one image to another, besides the Bay Bridge.</p>
+
+    <h2>Reflection</h2>
+
+    <p>
+      I enjoyed working on all parts of this project, specifically the image sharpening part because
+      it brought out some details of the image that I wouldn't have noticed at first. It also feels
+      intriguing to see algorithms being able to extract details that don't seem possible to do so
+      when looking at the blurred image with a naked eye. It was also fun to choose my own images
+      for multiresolution blending.
+    </p>
+  </body>
+</html>
