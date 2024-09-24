@@ -438,6 +438,21 @@
 
     <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
 
+    <p>
+      Now, we can use the Guassian and Laplacian stacks to blend our apple and orange images into an
+      oraple. To blend, we create a blurred mask of the same shape as both input images to create a
+      smoother final image. For oraple, the mask is split vertically, with the left half completely
+      white and the right half completely black, as shown below. Similar to what we do for the two
+      input images, we also create a Gaussian stack for the blurred mask.
+    </p>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">Mask for Oraple</h4>
+        <img src="media/part24/24_mask_oraple.jpg" alt="oraple.jpg" />
+      </div>
+    </div>
+
     <div class="image-container-1">
       <div class="image-item">
         <h4 class="image-title">Blended Oraple</h4>
@@ -445,15 +460,21 @@
       </div>
     </div>
 
+    <h3>Irregular masks</h3>
+
     <p>
-      We export the mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as
-      PNG will give 4 channels.
+      For irregular masks, we can create them using Adobe Photoshop - there is a convenient
+      selection tool that we can use to highlight the entire image and automatically get a selected
+      region to create a mask from. Then, we can export this mask. Note that we should export the
+      mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as PNG will give
+      use 4 channels, which is inconsistent with the input images like orange and apple.
       <br />
       <br />
 
-      We blend Curry's face onto LeBron's since the Curry's face is larger than LeBron's in the
-      aligned images. The quality of all 5 images below is not high. We will use higher quality
-      examples below to better illustrate the results.
+      In the first example, we blend Steph Curry's face onto LeBron James's. I chose to not do this
+      the flipped way because the Curry's face is larger than LeBron's in the aligned images so
+      LeBron's face would less clear in the blended image. The quality of all 5 images below is not
+      high. We will use higher quality examples below to better illustrate the results.
     </p>
 
     <div class="image-container-2">
@@ -573,7 +594,7 @@
       </div>
     </div>
 
-    <p>The blended image now has less sudden changes from one image to another.</p>
+    <p>The blended image now has less sudden changes from one image to another, besides the Bay Bridge.</p>
 
     <h3>Bells & Whistles</h3>
 
