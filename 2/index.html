@@ -313,7 +313,10 @@
       <div class="image-item">
         <h4 class="image-title">Snowboarder</h4>
         <div class="image-wrapper">
-          <img src="media/part22/22_frequency_img_snowboarder.jpg" alt="22_frequency_img_snowboarder.jpg" />
+          <img
+            src="media/part22/22_frequency_img_snowboarder.jpg"
+            alt="22_frequency_img_snowboarder.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
@@ -325,13 +328,19 @@
       <div class="image-item">
         <h4 class="image-title">Aligned Snowboarder</h4>
         <div class="image-wrapper">
-          <img src="media/part22/22_frequency_snowboarder_aligned.jpg" alt="22_frequency_snowboarder_aligned.jpg" />
+          <img
+            src="media/part22/22_frequency_snowboarder_aligned.jpg"
+            alt="22_frequency_snowboarder_aligned.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
         <h4 class="image-title">Aligned Skier</h4>
         <div class="image-wrapper">
-          <img src="media/part22/22_frequency_skier_aligned.jpg" alt="22_frequency_skier_aligned.jpg" />
+          <img
+            src="media/part22/22_frequency_skier_aligned.jpg"
+            alt="22_frequency_skier_aligned.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
@@ -389,9 +398,43 @@
     <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
 
     <p>
-      Gaussian stack Laplacian stack Normalize Both can clip even though the code to display images
-      automatically clips for us.
+      To set up for the multiresolution blending in Part 2.4, we will first obtain the Gaussian and
+      Laplacian stack of the apple image and orange image individually. For both stacks, we go to
+      <code>num_levels = 5</code>.
+      <br />
+      <br />
+      To get the Gaussian stack, at each level, we blur the image from the previous level (at the
+      first level, we start with the original image) with the Gaussian filter, like before. For both
+      images, I used <code>sigma = 4</code> and <code>kernel_size = 6 * 4 = 24</code>.
+      <br />
+      <br />
+      To get the Laplacian stack, we take the delta between the previous and current layer in the
+      Gaussian stack and normalize this delta. At the end of the stack, we add the last level from
+      the Gaussian stack (no delta here).
     </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Apple Gaussian and Laplacian Stack</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part23/23_apple_gaussian_laplacian_stack.jpg"
+            alt="23_apple_gaussian_laplacian_stack.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Orange Gaussian and Laplacian Stack</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part23/23_orange_gaussian_laplacian_stack.jpg"
+            alt="23_orange_gaussian_laplacian_stack.jpg"
+          />
+        </div>
+      </div>
+    </div>
 
     <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
 

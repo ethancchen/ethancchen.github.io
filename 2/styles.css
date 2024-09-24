@@ -21,6 +21,13 @@ code {
   margin: 0 auto;
 }
 
+.image-container-1-wide {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
 .image-container-1 .image-item {
   width: 100%;
 }
