@@ -29,8 +29,10 @@ code {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(calc(50% - 10px), 1fr));
   gap: 20px;
-  max-width: 100%;
+  max-width: 60%;
   justify-content: center;
+  margin: 0 auto;
+  justify-items: center;
 }
 
 .image-container-3 {

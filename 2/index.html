@@ -42,9 +42,9 @@
 
     <p>
       This project aims to
-      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image processing techniques on photos from the
-      Prokudin-Gorskii collection, primarily with a naive approach then a pyramid approach, to produce an image with
-      color.
+      <b>TODOTODOTODOTODOTODOTODOTODOTODO</b> programatically apply image processing techniques on
+      photos from the Prokudin-Gorskii collection, primarily with a naive approach then a pyramid
+      approach, to produce an image with color.
     </p>
 
     <h2>Part 1: Fun with Filters</h2>
@@ -54,12 +54,13 @@
     <h3>Part 1.1: Finite Difference Operator</h3>
 
     <p>
-      In this part, we aim to construct an edge image with a Gaussian kernel. To find the partial derivative in x and y
-      (which show the intensity change in the horizontal and vertical directions, respectively), we first convolve the
-      image with the finite difference operators
-      <code>D_x = [1, -1]</code> and <code>D_y = [1, -1]^T</code>. I chose a Visually looking at the image, I decided
-      that a <code>threshold = 0.2</code> looked the best. This highlghted the high frequencies of the image without
-      including too much noise, which would clutter the binarized edge image.
+      In this part, we aim to construct an edge image with a Gaussian kernel. To find the partial
+      derivative in x and y (which show the intensity change in the horizontal and vertical
+      directions, respectively), we first convolve the image with the finite difference operators
+      <code>D_x = [1, -1]</code> and <code>D_y = [1, -1]^T</code>. I chose a Visually looking at the
+      image, I decided that a <code>threshold = 0.2</code> looked the best. This highlghted the high
+      frequencies of the image without including too much noise, which would clutter the binarized
+      edge image.
     </p>
 
     <div class="image-container-3">
@@ -86,12 +87,12 @@
     <h3>Part 1.2: Derivative of Gaussian (DoG) Filter</h3>
 
     <p>
-      Now, we can create and use a derivative of Gaussian filter to convolve the image. First, we blur the image with a
-      Gaussian filter. Slide 33 of our lecture on
-      <strong>Image Processing II: Convolution and Derivatives</strong> shared a rule of thumb of choosing a half-width
-      of 3$\sigma$ so I chose 6 as the multiplication factor so I chose <code>kernel_size = 10</code> and
-      <code>sigma = 10/6</code>. The <code>sigma</code> was chosen after some manual checks. For both images, I chose
-      <code>threshold = 0.07</code>.
+      Now, we can create and use a derivative of Gaussian filter to convolve the image. First, we
+      blur the image with a Gaussian filter. Slide 33 of our lecture on
+      <strong>Image Processing II: Convolution and Derivatives</strong> shared a rule of thumb of
+      choosing a half-width of 3$\sigma$ so I chose 6 as the multiplication factor so I chose
+      <code>kernel_size = 10</code> and <code>sigma = 10/6</code>. The <code>sigma</code> was chosen
+      after some manual checks. For both images, I chose <code>threshold = 0.07</code>.
     </p>
 
     <h4>Images after initially blurring the cameraman image</h4>
@@ -112,7 +113,10 @@
       <div class="image-item">
         <h4 class="image-title">Gradient Magnitude</h4>
         <div class="image-wrapper">
-          <img src="media/part12/12_gradient_magnitude_blurred.jpg" alt="12_gradient_magnitude_blurred.jpg" />
+          <img
+            src="media/part12/12_gradient_magnitude_blurred.jpg"
+            alt="12_gradient_magnitude_blurred.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
@@ -141,7 +145,10 @@
       <div class="image-item">
         <h4 class="image-title">Gradient Magnitude</h4>
         <div class="image-wrapper">
-          <img src="media/part12/12_gradient_magnitude_DoG.jpg" alt="12_gradient_magnitude_DoG.jpg" />
+          <img
+            src="media/part12/12_gradient_magnitude_DoG.jpg"
+            alt="12_gradient_magnitude_DoG.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
@@ -157,11 +164,12 @@
     <h3>Part 2.1: Image "Sharpening"</h3>
 
     <p>
-      To sharpen an image, we first take the original image and blur each individual RGB channel with a low-pass
-      Gaussian filter, again effectively removing high-frequency details like fine edges and textures. Then, we take the
-      difference between the raw image and this blurred one to get the high frequencies. Then, we sharpen the image
-      through unsharp masking by adding back the high-frequency parts, which are first multiplied with a $\alpha$
-      factor. For all examples below, I blurred with the same <code>kernel_size = 10</code> and
+      To sharpen an image, we first take the original image and blur each individual RGB channel
+      with a low-pass Gaussian filter, again effectively removing high-frequency details like fine
+      edges and textures. Then, we take the difference between the raw image and this blurred one to
+      get the high frequencies. Then, we sharpen the image through unsharp masking by adding back
+      the high-frequency parts, which are first multiplied with a $\alpha$ factor. For all examples
+      below, I blurred with the same <code>kernel_size = 10</code> and
       <code>sigma = 10/6</code> from the earlier parts.
     </p>
 
@@ -218,13 +226,19 @@
       <div class="image-item">
         <h4 class="image-title">Blurred Pragser Wildsee</h4>
         <div class="image-wrapper">
-          <img src="media/part21/21_pragser_wildsee_blurred.jpg" alt="21_pragser_wildsee_blurred.jpg" />
+          <img
+            src="media/part21/21_pragser_wildsee_blurred.jpg"
+            alt="21_pragser_wildsee_blurred.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
         <h4 class="image-title">Sharpened Pragser Wildsee ($\alpha = 0.75$)</h4>
         <div class="image-wrapper">
-          <img src="media/part21/21_pragser_wildsee_sharpened.jpg" alt="21_pragser_wildsee_sharpened.jpg" />
+          <img
+            src="media/part21/21_pragser_wildsee_sharpened.jpg"
+            alt="21_pragser_wildsee_sharpened.jpg"
+          />
         </div>
       </div>
     </div>
@@ -233,15 +247,112 @@
 
     <h3>Part 2.2: Hybrid Images</h3>
 
+    <p>
+      In this part, we aim to take the frequencies of a low-frequency image and apply them to a
+      high-frequency image. In the first example, we align Nutmeg onto Professor Derek Hoiem. As
+      expected, the aligned picture of Prof. Hoiem is the same as the original iamge since we're
+      just aligning and adjusting Nutmeg to Prof. Hoeim. We obtain the grayscale aligned images by
+      calling <code>rgb2gray</code> from <code>skimage.color</code> on the corresponding aligned
+      image.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Nutmeg</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/nutmeg.jpg" alt="nutmeg.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Derek Hoiem</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/DerekPicture.jpg" alt="DerekPicture.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Nutmeg</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/22_nutmeg_aligned.jpg" alt="22_nutmeg_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Derek Hoiem</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/22_DerekPicture_aligned.jpg" alt="22_DerekPicture_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Grayscale Nutmeg</h4>
+        <div class="image-wrapper">
+          <img src="media/part22/22_nutmeg_aligned_grayscale.jpg" alt="22_nutmeg_aligned.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Grayscale Derek Hoiem</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_DerekPicture_grayscale_aligned.jpg"
+            alt="22_DerekPicture_aligned.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Nutmeg and Derek Both Grayscale Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_DerekPicture_grayscale_hybrid_image.jpg"
+            alt="22_nutmeg_DerekPicture_grayscale_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
     <h3>Bells & Whistles</h3>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Both Color Nutmeg and Derek Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_DerekPicture_hybrid_image.jpg"
+            alt="22_nutmeg_DerekPicture_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Color Nutmeg and Grayscale Derek Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_aligned_regular_DerekPicture_aligned_grayscale_hybrid_image.jpg"
+            alt="22_nutmeg_aligned_regular_DerekPicture_aligned_grayscale_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Grayscale Nutmeg and Regular Derek Hybrid Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part22/22_nutmeg_aligned_grayscale_DerekPicture_aligned_regular_hybrid_image.jpg"
+            alt="22_nutmeg_aligned_grayscale_DerekPicture_aligned_regular_hybrid_image.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      We can see that using both color aligned images of nutmeg and image of Prof. Hoiem generated
+      <strong>and</strong> color aligned image of nutmeg and grayscale aligned image of Prof. Hoiem
+      generated decent results - the hybrid image has a nice contrast and retains the color of Prof.
+      Hoiem's face while including the high frequencies (edges) from nutmeg.
+    </p>
 
     <h2>Multi-resolution Blending and the Oraple journey</h2>
 
     <h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
 
     <p>
-      Gaussian stack Laplacian stack Normalize Both can clip even though the code to display images automatically clips
-      for us.
+      Gaussian stack Laplacian stack Normalize Both can clip even though the code to display images
+      automatically clips for us.
     </p>
 
     <h3>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
@@ -254,14 +365,14 @@
     </div>
 
     <p>
-      We export the mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as PNG will give 4
-      channels.
+      We export the mask image from Adobe Photoshop as JPG so our image has 3 channels. Exporting as
+      PNG will give 4 channels.
       <br />
       <br />
 
-      We blend Curry's face onto LeBron's since the Curry's face is larger than LeBron's in the aligned images. The
-      quality of all 5 images below is not high. We will use higher quality examples below to better illustrate the
-      results.
+      We blend Curry's face onto LeBron's since the Curry's face is larger than LeBron's in the
+      aligned images. The quality of all 5 images below is not high. We will use higher quality
+      examples below to better illustrate the results.
     </p>
 
     <div class="image-container-2">
@@ -313,7 +424,10 @@
       <div class="image-item">
         <h4 class="image-title">Aligned Barcelona Skyline</h4>
         <div class="image-wrapper">
-          <img src="media/output/barcelona_skyline_aligned.jpg" alt="barcelona_skyline_aligned.jpg" />
+          <img
+            src="media/output/barcelona_skyline_aligned.jpg"
+            alt="barcelona_skyline_aligned.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
@@ -334,9 +448,9 @@
     </div>
 
     <p>
-      The blended image above has rather abrupt changes from bright buildings to ones in the night time. Also, the dark
-      patches in some of Barcelona's city view are awkward. The shadow makes it feel like some clouds are hovering over
-      Barcelona's buildings near the blurred edge.
+      The blended image above has rather abrupt changes from bright buildings to ones in the night
+      time. Also, the dark patches in some of Barcelona's city view are awkward. The shadow makes it
+      feel like some clouds are hovering over Barcelona's buildings near the blurred edge.
     </p>
 
     <div class="image-container-2">
@@ -355,7 +469,10 @@
       <div class="image-item">
         <h4 class="image-title">Aligned Barcelona Night Sky</h4>
         <div class="image-wrapper">
-          <img src="media/output/barcelona_night_sky_aligned.jpg" alt="barcelona_night_sky_aligned.jpg" />
+          <img
+            src="media/output/barcelona_night_sky_aligned.jpg"
+            alt="barcelona_night_sky_aligned.jpg"
+          />
         </div>
       </div>
       <div class="image-item">
@@ -382,10 +499,11 @@
     <h2>Reflection</h2>
 
     <p>
-      I enjoyed working on all parts of this project, specifically the image sharpening part because it brought out some
-      details of the image that I wouldn't have noticed at first. It also feels intriguing to see algorithms being able
-      to extract details that don't seem possible to do so when looking at the blurred image with a naked eye. It was
-      also fun to choose my own images for multiresolution blending.
+      I enjoyed working on all parts of this project, specifically the image sharpening part because
+      it brought out some details of the image that I wouldn't have noticed at first. It also feels
+      intriguing to see algorithms being able to extract details that don't seem possible to do so
+      when looking at the blurred image with a naked eye. It was also fun to choose my own images
+      for multiresolution blending.
     </p>
   </body>
 </html>
