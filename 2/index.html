@@ -55,10 +55,19 @@
       In this part, we aim to construct an edge image with a Gaussian kernel. To find the partial
       derivative in x and y (which show the intensity change in the horizontal and vertical
       directions, respectively), we first convolve the image with the finite difference operators
-      <code>D_x = [1, -1]</code> and <code>D_y = [1, -1]^T</code>. I chose a Visually looking at the
-      image, I decided that a <code>threshold = 0.2</code> looked the best. This highlghted the high
-      frequencies of the image without including too much noise, which would clutter the binarized
-      edge image.
+      <code>D_x = [1, -1]</code> and <code>D_y = [1, -1]^T</code>. That is, convolving the
+      <code>image</code> with <code>D_x</code> to get <code>img_gradient_x</code> and convolving the
+      <code>image</code> with <code>D_y</code> to get <code>img_gradient_y</code>. Then, we get the
+      computing the gradient's magnitude by each pixel by calculating $\sqrt{\text{img_gradient_x}^2
+      + \text{img_graident_y}^2}$. To get the final result of the edge image, we apply a threshold
+      to binarize the magnitudes.
+      <br />
+      <br />
+      Visually looking at the image, I decided that a <code>threshold = 0.2</code> looked the best.
+      This highlghted the high frequencies of the image without including too much noise, which
+      would clutter the binarized edge image. Going slightly lower and higher than 0.2 had the
+      tradeoffs of even more noise in the form of thicker stray marks and broken lines,
+      respectively.
     </p>
 
     <div class="image-container-3">
@@ -86,11 +95,12 @@
 
     <p>
       Now, we can create and use a derivative of Gaussian filter to convolve the image. First, we
-      blur the image with a Gaussian filter. Slide 33 of our lecture on
-      <strong>Image Processing II: Convolution and Derivatives</strong> shared a rule of thumb of
-      choosing a half-width of 3$\sigma$ so I chose 6 as the multiplication factor so I chose
-      <code>kernel_size = 10</code> and <code>sigma = 10/6</code>. The <code>sigma</code> was chosen
-      after some manual checks. For both images, I chose <code>threshold = 0.07</code>.
+      blur the image with a Gaussian kernel, using <code>cv2.getGaussianKernel</code>. Slide 33 of
+      our lecture on <strong>Image Processing II: Convolution and Derivatives</strong> shared a rule
+      of thumb of choosing a half-width of 3$\sigma$ so I chose 6 as the multiplication factor so I
+      chose <code>kernel_size = 10</code> and <code>sigma = 10/6</code>. We can then use the same
+      finite difference operators from Part 1.1. The <code>sigma</code> was chosen after some manual
+      checks. For both images, I chose <code>threshold = 0.07</code>.
     </p>
 
     <h4>Images after initially blurring the cameraman image</h4>
@@ -121,6 +131,23 @@
         <h4 class="image-title">Edge Image</h4>
         <div class="image-wrapper">
           <img src="media/part12/12_edge_image_blurred.jpg" alt="12_edge_image_blurred.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h4>DoG filters</h4>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">DoG x</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_DoG_x.jpg" alt="12_DoG_x.jpg" class="larger-image" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">DoG y</h4>
+        <div class="image-wrapper">
+          <img src="media/part12/12_DoG_y.jpg" alt="12_DoG_y.jpg" class="larger-image" />
         </div>
       </div>
     </div>
@@ -156,6 +183,15 @@
         </div>
       </div>
     </div>
+
+    <p>
+      These images are much cleaner than the ones in Part 1.1 as we can see that the noise near the
+      bottom of the resulting image are nearly all gone. The edges of the cameraman and the camera
+      and its stand are also now both thicker.
+      <br />
+      <br />
+      Convolving the Gaussian with <code>D_x</code> and <code>D_y</code> gives us the same result.
+    </p>
 
     <h2>Part 2: Fun with Frequencies!</h2>
 
