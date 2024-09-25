@@ -42,6 +42,11 @@ code {
   justify-items: center;
 }
 
+.image-container-2 .larger-image {
+  width: 300px;
+  height: auto;
+}
+
 .image-container-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
