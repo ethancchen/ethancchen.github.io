@@ -34,7 +34,7 @@
     </style>
   </head>
   <body>
-    <h1>Project 3 - Face Morphing</h1>
+    <h1>TODO: address all prompts!! Project 3 - Face Morphing</h1>
 
     <h3>By Ethan Chen</h3>
 
@@ -47,26 +47,300 @@
 
     <h2>Part 1: Defining Correspondences</h2>
 
-    <p></p>
+    <p>
+      First, I took a picture of my own face in a way that mimics the structure of the photo of
+      George Clooney (taken by
+      <a href="https://en.wikipedia.org/wiki/Martin_Schoeller">Martin Schoeller</a>). Then, I
+      aligned the faces using code from Project 2 to ensure the images are the same shape. Then,
+      with some <code>cv2</code> code I wrote myself, I selected the facial keypoints on the images
+      of both George and my face to be the correspondence points, including the 4 corner ones (I
+      wrote some code to adjust the selection of corner points).
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Raw Image of George</h4>
+        <div class="image-wrapper">
+          <img src="media/part1/george.jpg" alt="george.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Raw Image of Ethan</h4>
+        <div class="image-wrapper">
+          <img src="media/part1/ethan.jpg" alt="ethan.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>After aligning</p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Aligned Image of George</h4>
+        <div class="image-wrapper">
+          <img src="media/part1/aligned_george.jpg" alt="aligned_george.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Aligned Image of Ethan</h4>
+        <div class="image-wrapper">
+          <img src="media/part1/aligned_ethan.jpg" alt="aligned_ethan.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Then I compute the facial keypoints, which I then call <code>scipy.spatial.Delaunay</code> on
+      to get the Delaunay triangulation for the mesh.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Triangulation of George</h4>
+        <div class="image-wrapper">
+          <img src="media/part1/triangulation_george.jpg" alt="triangulation_george.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Triangulation of Ethan</h4>
+        <div class="image-wrapper">
+          <img src="media/part1/triangulation_ethan.jpg" alt="triangulation_ethan.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>Now, we can get the average of the correspondnece points and display that triangulation</p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Triangulation of George using Mean of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part1/mean_triangulation_george.jpg"
+            alt="mean_triangulation_george.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Triangulation of Ethan using Mean of Points</h4>
+        <div class="image-wrapper">
+          <img src="media/part1/mean_triangulation_ethan.jpg" alt="mean_triangulation_ethan.jpg" />
+        </div>
+      </div>
+    </div>
 
     <h2>Part 2: Computing the "Mid-Way Face"</h2>
 
-    <p></p>
+    <p>
+      To find the "mid-way face" between images A and B, we can use the average shape by warping A
+      and B into that and then average their colors together.
+      <br />
+      <br />
+      This is the "mid-way face" of George's face with mine.
+    </p>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">"Mid-Way face" of George's Face with Ethan's Face</h4>
+        <div class="image-wrapper">
+          <img src="media/part2/midway_face.jpg" alt="midway_face.jpg" />
+        </div>
+      </div>
+    </div>
 
     <h2>Part 3: The Morph Sequence</h2>
 
-    <p></p>
+    <p>Implementation details</p>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">GIF of George's Face Morphing into Ethan's Face</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part3/clipped_converted_morph_sequence_fps_10.gif"
+            alt="clipped_converted_morph_sequence_fps_10.gif"
+          />
+        </div>
+      </div>
+    </div>
 
     <h2>Part 4: The "Mean Face" of a Population</h2>
 
-    <p></p>
+    <p>
+      I sourced my images from the
+      <a href="https://fei.edu.br/~cet/facedatabase.html">FEI database</a>. I chose to use the
+      dataset of spatially normalized images (not cropped) – 2 subsets of 100 non-smiiling images
+      and 100 smiling images - because we are also given 46 annotated points for each of the 200
+      images. None of the 46 points were corners so I needed to manually add the corner points,
+      which was simple to do through code since each face took up the entire image so we could just
+      programmatically append the corners directly to the list of 46. Without adding corner points,
+      we wouldn't account for the Delaunay triangles of everything outside the region of the face,
+      which would be black in the resulting image.
+      <br />
+      <br />
+      Then, I computed the average face shape by subsets of non-smiling and smiling.
+    </p>
+
+    <p>
+      Next, I morphed each of the faces in the dataset to the corresponding subset's average shape.
+      Here are some examples.
+    </p>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Non-smiling 25a</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_25a.jpg" alt="warped_to_avg_shape_25a.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Non-smiling 50a</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_50a.jpg" alt="warped_to_avg_shape_50a.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Non-smiling 75a</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_75a.jpg" alt="warped_to_avg_shape_75a.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Non-smiling 100a</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_100a.jpg" alt="warped_to_avg_shape_100a.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Smiling 25b</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_25b.jpg" alt="warped_to_avg_shape_25b.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Smiling 50b</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_50b.jpg" alt="warped_to_avg_shape_50b.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Smiling 75b</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_75b.jpg" alt="warped_to_avg_shape_75b.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Smiling 100b</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/warped_to_avg_shape_100b.jpg" alt="warped_to_avg_shape_100b.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>This is the mean image for each subset.</p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Mean Face of Non-Smiling Population</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/mean_face_non_smiling.jpg" alt="mean_face_non_smiling.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Mean Face of Smiling Population</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/mean_face_smiling.jpg" alt="mean_face_smiling.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now, we can warp my face into the average geometry - we take the non-smiling population to
+      show as an example - and warp the average face of the non-smiling subet into my geometry.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">My Face Warped into the Average Geometry</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_warped_avg_geometry.jpg"
+            alt="ethan_warped_avg_geometry.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Average Face Warped into the Average Geometry</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_warped_avg_geometry.jpg"
+            alt="ethan_warped_avg_geometry.jpg"
+          />
+        </div>
+      </div>
+    </div>
 
     <h2>Part 5: Caricatures: Extrapolation from the Mean</h2>
 
-    <p></p>
+    <p>
+      To get a caricature of my face by extrapolating from the population mean in part 4, I first
+      cropped the image of myself to better suit the style of the images in the FEI datasets I used,
+      specifically, removing a big chunk of the top part of the image so less of my hair shows. Most
+      of the FEI database images don't fully show the person's forehead, which makes sense since our
+      dataset doesn't have annotated keypoints close to that area of the image.
+      <br />
+      <br />
+      This is the image cropped and downscaled to get the same shape of
+      <code>(300, 250, 3)</code> as the FEI ones.
+    </p>
 
-    <h2>Reflection</h2>
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">Cropped and Downscaled Ethan</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/cropped_and_downscaled_ethan.jpg"
+            alt="cropped_and_downscaled_ethan.jpg"
+          />
+        </div>
+      </div>
+    </div>
 
-    <p></p>
+    <p>
+      The next steps work like this: To get the caricature points, we take a scaled (by
+      <code>alpha</code>) version of the difference between the points on my face with the mean
+      points of the subset. Then, we can warp my face using the same method as before to get the
+      caricature image.
+    </p>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">$\alpha = 0.5$</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_caricature_alpha_0.5.jpg"
+            alt="ethan_caricature_alpha_0.5.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">$\alpha = 1.5$</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_caricature_alpha_1.5.jpg"
+            alt="ethan_caricature_alpha_1.5.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">$\alpha = 2.5$</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_caricature_alpha_2.5.jpg"
+            alt="ethan_caricature_alpha_2.5.jpg"
+          />
+        </div>
+      </div>
+    </div>
   </body>
 </html>
