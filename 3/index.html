@@ -188,7 +188,8 @@
 
     <p>
       Next, I morphed each of the faces in the dataset to the corresponding subset's average shape.
-      Here are the raw images shown in the first and third row and the warped images on the second and fourth row.
+      Here are the raw images shown in the first and third row and the warped images on the second
+      and fourth row.
     </p>
 
     <div class="image-container-4">
@@ -290,6 +291,15 @@
       </div>
     </div>
 
+    <p>
+      In these images above, we can note a few key changes: both faces in 25a and 25b are more
+      aligned so that this person looks more towards the center. Their faces in the raw images are
+      slightly angled toward the left of the audience. The faces in the raw 50a and 50b are also
+      slightly angled upwards. Warping them to the average shape adjust it so that that person's
+      faces are more front-facing. Some changes are more subtle and stand out less like the faces of
+      75a and 75b taking up more space in the warped images.
+    </p>
+
     <p>This is the mean image for each subset.</p>
 
     <div class="image-container-2">
@@ -351,10 +361,7 @@
       <div class="image-item">
         <h4 class="image-title">Cropped and Downscaled Ethan</h4>
         <div class="image-wrapper">
-          <img
-            src="media/part5/ethan_downscaled_cropped.jpg"
-            alt="ethan_downscaled_cropped.jpg"
-          />
+          <img src="media/part5/ethan_downscaled_cropped.jpg" alt="ethan_downscaled_cropped.jpg" />
         </div>
       </div>
     </div>
@@ -406,5 +413,14 @@
         </div>
       </div>
     </div>
+
+    <p>
+      We can see that the lower alphas make my face shorter than it is in the downscaled and cropped
+      input. This makes sense since my face also looks longer than most of the faces in the FEI
+      dataset. As expected, using $\alpha = 1.5$ exaggerates the length of my face, stretching it
+      out even more.
+    </p>
+
+    <h2>Bells and Whistles</h2>
   </body>
 </html>
