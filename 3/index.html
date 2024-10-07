@@ -312,7 +312,9 @@
     </div>
 
     <p>
-      The next steps work like this: To get the caricature points, we take a scaled (by
+      To get the caricature points, we first annotate the points on my face by going in the same
+      order as the annotated points from each image in the FEI dataset - the positions of these
+      points are chosen independnently of those in the dataset. Then, we take a scaled (by
       <code>alpha</code>) version of the difference between the points on my face with the mean
       points of the subset. Then, we can warp my face using the same method as before to get the
       caricature image.
