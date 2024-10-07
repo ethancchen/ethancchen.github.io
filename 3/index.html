@@ -61,7 +61,7 @@
       <div class="image-item">
         <h4 class="image-title">Raw Image of George</h4>
         <div class="image-wrapper">
-          <img src="media/part1/george.jpg" alt="george.jpg" />
+          <img src="media/part1/george_small.jpg" alt="george_small.jpg" />
         </div>
       </div>
       <div class="image-item">
@@ -78,33 +78,34 @@
       <div class="image-item">
         <h4 class="image-title">Aligned Image of George</h4>
         <div class="image-wrapper">
-          <img src="media/part1/aligned_george.jpg" alt="aligned_george.jpg" />
+          <img src="media/part1/george_aligned.jpg" alt="aligned_george.jpg" />
         </div>
       </div>
       <div class="image-item">
         <h4 class="image-title">Aligned Image of Ethan</h4>
         <div class="image-wrapper">
-          <img src="media/part1/aligned_ethan.jpg" alt="aligned_ethan.jpg" />
+          <img src="media/part1/ethan_aligned.jpg" alt="aligned_ethan.jpg" />
         </div>
       </div>
     </div>
 
     <p>
       Then I compute the facial keypoints, which I then call <code>scipy.spatial.Delaunay</code> on
-      to get the Delaunay triangulation for the mesh.
+      to get the Delaunay triangulation for the mesh, which is how we set up the task of converting
+      source triangles to destination ones for the image warping.
     </p>
 
     <div class="image-container-2">
       <div class="image-item">
         <h4 class="image-title">Triangulation of George</h4>
         <div class="image-wrapper">
-          <img src="media/part1/triangulation_george.jpg" alt="triangulation_george.jpg" />
+          <img src="media/part1/george_triangulation.jpg" alt="george_triangulation.jpg" />
         </div>
       </div>
       <div class="image-item">
         <h4 class="image-title">Triangulation of Ethan</h4>
         <div class="image-wrapper">
-          <img src="media/part1/triangulation_ethan.jpg" alt="triangulation_ethan.jpg" />
+          <img src="media/part1/ethan_triangulation.jpg" alt="ethan_triangulation.jpg" />
         </div>
       </div>
     </div>
@@ -116,15 +117,15 @@
         <h4 class="image-title">Triangulation of George using Mean of Points</h4>
         <div class="image-wrapper">
           <img
-            src="media/part1/mean_triangulation_george.jpg"
-            alt="mean_triangulation_george.jpg"
+            src="media/part1/george_mean_triangulation.jpg"
+            alt="george_mean_triangulation.jpg"
           />
         </div>
       </div>
       <div class="image-item">
         <h4 class="image-title">Triangulation of Ethan using Mean of Points</h4>
         <div class="image-wrapper">
-          <img src="media/part1/mean_triangulation_ethan.jpg" alt="mean_triangulation_ethan.jpg" />
+          <img src="media/part1/ethan_mean_triangulation.jpg" alt="ethan_mean_triangulation.jpg" />
         </div>
       </div>
     </div>
@@ -150,7 +151,11 @@
 
     <h2>Part 3: The Morph Sequence</h2>
 
-    <p>Implementation details</p>
+    <p>
+      We take a few steps. We need to pad the last row of matrix A with 0 0 1 and the last element
+      on the B vector with 1 in order to accomodate translations. Without this pad, we would only be
+      able to allow rotation, scaling, and shearing transformations.
+    </p>
 
     <div class="image-container-1">
       <div class="image-item">
