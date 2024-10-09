@@ -398,11 +398,20 @@
 
     <div class="image-container-4">
       <div class="image-item">
-        <h4 class="image-title">$\alpha = -1.5$</h4>
+        <h4 class="image-title">$\alpha = -4$</h4>
         <div class="image-wrapper">
           <img
-            src="media/part5/ethan_caricature_alpha_neg1.5.jpg"
-            alt="ethan_caricature_alpha_neg1.5.jpg"
+            src="media/part5/ethan_caricature_alpha_neg4.jpg"
+            alt="ethan_caricature_alpha_neg2.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">$\alpha = -2$</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_caricature_alpha_neg2.jpg"
+            alt="ethan_caricature_alpha_neg2.jpg"
           />
         </div>
       </div>
@@ -411,7 +420,16 @@
         <div class="image-wrapper">
           <img
             src="media/part5/ethan_caricature_alpha_neg1.jpg"
-            alt="ethan_caricature_alpha_neg1jpg"
+            alt="ethan_caricature_alpha_neg1.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">$\alpha = -0.5$</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_caricature_alpha_neg0.5.jpg"
+            alt="ethan_caricature_alpha_neg0.5.jpg"
           />
         </div>
       </div>
@@ -425,21 +443,40 @@
         </div>
       </div>
       <div class="image-item">
-        <h4 class="image-title">$\alpha = 1.75$</h4>
+        <h4 class="image-title">$\alpha = 2$</h4>
         <div class="image-wrapper">
           <img
-            src="media/part5/ethan_caricature_alpha_pos1.75.jpg"
-            alt="ethan_caricature_alpha_pos1.75.jpg"
+            src="media/part5/ethan_caricature_alpha_pos2.jpg"
+            alt="ethan_caricature_alpha_pos2.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">$\alpha = 4$</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_caricature_alpha_pos4.jpg"
+            alt="ethan_caricature_alpha_pos4.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">$\alpha = 6$</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/ethan_caricature_alpha_pos6.jpg"
+            alt="ethan_caricature_alpha_pos6.jpg"
           />
         </div>
       </div>
     </div>
 
     <p>
-      We can see that the lower alphas make my face shorter than it is in the downscaled and cropped
-      input. This makes sense since my face also looks longer than most of the faces in the FEI
-      dataset. As expected, using $\alpha = 1.5$ exaggerates the length of my face, stretching it
-      out even more.
+      We can see that the lower alphas make my face vertically shorter and wider (compared to the
+      downscaled and cropped input image). This makes sense since my face also looks longer than
+      most of the faces in the FEI dataset. As expected, increasing $\alpha$ past 1 exaggerates the
+      length of my face, stretching it out even more. Large magnitudes of alpha has a greater
+      distortion effect on the image.
     </p>
 
     <h2>Bells and Whistles</h2>
