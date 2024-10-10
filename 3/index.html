@@ -42,7 +42,8 @@
 
     <p>
       This project aims to morph one face with another and creating a caricature from a population
-      of faces.
+      of faces. Disclaimer: some images, especially triangulations, are not the same dimensions as
+      the raw image because the former was screenshotted vs. saved through code.
     </p>
 
     <h2>Part 1: Defining Correspondences</h2>
@@ -50,11 +51,11 @@
     <p>
       First, I took a picture of my own face in a way that mimics the structure of the photo of
       George Clooney (taken by
-      <a href="https://en.wikipedia.org/wiki/Martin_Schoeller">Martin Schoeller</a>). Then, I
-      aligned the faces using code from Project 2 to ensure the images are the same shape. Then,
-      with some <code>cv2</code> code I wrote myself, I selected the facial keypoints on the images
-      of both George and my face to be the correspondence points, including the 4 corner ones (I
-      wrote some code to adjust the selection of corner points).
+      <a href="https://en.wikipedia.org/wiki/Martin_Schoeller" target="”_blank”">Martin Schoeller</a
+      >). Then, I aligned the faces using code from Project 2 to ensure the images are the same
+      shape. Then, with some <code>cv2</code> code I wrote myself, I selected the facial keypoints
+      on the images of both George and my face to be the correspondence points, including the 4
+      corner ones (I wrote some code to adjust the selection of corner points).
     </p>
 
     <div class="image-container-2">
@@ -144,10 +145,7 @@
       <div class="image-item">
         <h4 class="image-title">Original George (Aligned)</h4>
         <div class="image-wrapper">
-          <img
-            src="media/part1/george_aligned.jpg"
-            alt="george_aligned.jpg"
-          />
+          <img src="media/part1/george_aligned.jpg" alt="george_aligned.jpg" />
         </div>
       </div>
       <div class="image-item">
@@ -159,10 +157,7 @@
       <div class="image-item">
         <h4 class="image-title">Original Ethan (Aligned)</h4>
         <div class="image-wrapper">
-          <img
-            src="media/part1/ethan_aligned.jpg"
-            alt="ethan_aligned.jpg"
-          />
+          <img src="media/part1/ethan_aligned.jpg" alt="ethan_aligned.jpg" />
         </div>
       </div>
     </div>
@@ -175,7 +170,7 @@
       able to allow rotation, scaling, and shearing transformations.
     </p>
 
-    <div class="image-container-3">
+    <div class="image-container-1">
       <div class="image-item">
         <h4 class="image-title">GIF of George's Face Morphing into Ethan's Face</h4>
         <div class="image-wrapper">
@@ -191,14 +186,14 @@
 
     <p>
       I sourced my images from the
-      <a href="https://fei.edu.br/~cet/facedatabase.html">FEI database</a>. I chose to use the
-      dataset of spatially normalized images (not cropped) – 2 subsets of 100 non-smiiling images
-      and 100 smiling images - because we are also given 46 annotated points for each of the 200
-      images. None of the 46 points were corners so I needed to manually add the corner points,
-      which was simple to do through code since each face took up the entire image so we could just
-      programmatically append the corners directly to the list of 46. Without adding corner points,
-      we wouldn't account for the Delaunay triangles of everything outside the region of the face,
-      which would be black in the resulting image.
+      <a href="https://fei.edu.br/~cet/facedatabase.html" target="”_blank”">FEI database</a>. I
+      chose to use the dataset of spatially normalized images (not cropped) – 2 subsets of 100
+      non-smiiling images and 100 smiling images - because we are also given 46 annotated points for
+      each of the 200 images. None of the 46 points were corners so I needed to manually add the
+      corner points, which was simple to do through code since each face took up the entire image so
+      we could just programmatically append the corners directly to the list of 46. Without adding
+      corner points, we wouldn't account for the Delaunay triangles of everything outside the region
+      of the face, which would be black in the resulting image.
       <br />
       <br />
       Then, I computed the average face shape by subsets of non-smiling and smiling.
@@ -337,10 +332,7 @@
 
     <p>
       Now, we can warp my face into the average geometry - we take the non-smiling population to
-      show as an example - and warp the average face of the non-smiling subet into my geometry. The
-      second pair of images below are obtained with <code>cv2.medianBlur(image, 3)</code> where
-      <code>image</code> is the corresponding warped image from the first pair of images below that
-      we want to blur and <code>3</code> is the kernel size.
+      show as an example - and warp the average face of the non-smiling subet into my geometry.
     </p>
 
     <div class="image-container-2">
@@ -362,24 +354,6 @@
           />
         </div>
       </div>
-      <div class="image-item">
-        <h4 class="image-title">Blurred My Face Warped into the Average Geometry</h4>
-        <div class="image-wrapper">
-          <img
-            src="media/part4/blurred_ethan_part5_warped_to_non_smiling_avg_shape.jpg"
-            alt="blurred_ethan_part5_warped_to_non_smiling_avg_shape.jpg"
-          />
-        </div>
-      </div>
-      <div class="image-item">
-        <h4 class="image-title">Blurred Average Face Warped into the Average Geometry</h4>
-        <div class="image-wrapper">
-          <img
-            src="media/part4/blurred_non_smiling_avg_face_warped_ethan_part5_shape.jpg"
-            alt="blurred_non_smiling_avg_face_warped_ethan_part5_shape.jpg"
-          />
-        </div>
-      </div>
     </div>
 
     <h2>Part 5: Caricatures: Extrapolation from the Mean</h2>
@@ -396,11 +370,20 @@
       <code>(300, 250, 3)</code> as the FEI ones.
     </p>
 
-    <div class="image-container-1">
+    <div class="image-container-2">
       <div class="image-item">
         <h4 class="image-title">Cropped and Downscaled Ethan</h4>
         <div class="image-wrapper">
           <img src="media/part5/ethan_downscaled_cropped.jpg" alt="ethan_downscaled_cropped.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Triangulation of Cropped and Downscaled Ethan</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part5/triangulation_ethan_downscaled_cropped.jpg"
+            alt="triangulation_ethan_downscaled_cropped.jpg"
+          />
         </div>
       </div>
     </div>
@@ -499,12 +482,50 @@
 
     <h2>Bells and Whistles</h2>
 
-    <h3>Change age/gender/ethnicity/smile/etc of your (or your friend's) face...</h3>
+    <h3>
+      Bells and Whistles #1: Change age/gender/ethnicity/smile/etc of your (or your friend's)
+      face...
+    </h3>
+
+    <h4>Average Chinese Male Face</h4>
 
     <p>
-      I chose to warp and morph my face to and with an average Southeast Asian male face who looks
-      older than I do.
+      I chose to warp and morph my face to and with an average Southeast Asian male face that I got
+      from Pinterest <a href="https://pin.it/58M20s5L5" target="”_blank”">here</a> who looks older
+      than I do.
     </p>
+
+    <p>
+      Here are the input images. I got the middle image by manually cropping and downscaling like I
+      did with my face in Part 5.
+    </p>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Raw Average Asian Male Face</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/avg_asian_male_face.jpg"
+            alt="avg_asian_male_face.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Cropped and Downscaled Average Asian Male Face</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/avg_asian_male_face_downscaled_cropped.jpg"
+            alt="avg_asian_male_face_downscaled_cropped.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Cropped and Downscaled Ethan</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/ethan_downscaled_cropped.jpg" alt="ethan_downscaled_cropped.jpg" />
+        </div>
+      </div>
+    </div>
 
     <div class="image-container-3">
       <div class="image-item">
@@ -532,6 +553,191 @@
             src="media/bells_and_whistles/morphed_ethan_and_asian_male.jpg"
             alt="morphed_ethan_and_asian_male.jpg"
           />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      This morphed result above isn't too different from my own face. Let's observe a larger
+      change/difference in the morph by using an average Chinese female vs. male face. I found this
+      face at this <a href="https://pin.it/7tfCnWTNk" target="_blank">link</a> on Pinterest, too.
+    </p>
+
+    <h4>Average Chinese Female Face</h4>
+
+    <p>Using the same code, here are the input images and the generated warps and morph.</p>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Raw Average Asian Female Face</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/avg_asian_female_face.jpg"
+            alt="avg_asian_male_face.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Cropped and Downscaled Average Asian Female Face</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/avg_asian_female_face_downscaled_cropped.jpg"
+            alt="avg_asian_female_face_downscaled_cropped.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Cropped and Downscaled Ethan</h4>
+        <div class="image-wrapper">
+          <img src="media/part5/ethan_downscaled_cropped.jpg" alt="ethan_downscaled_cropped.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">Shape Only</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/warped_asian_female_to_ethan_geometry.jpg"
+            alt="warped_asian_female_to_ethan_geometry.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Appearance Only</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/warped_ethan_to_asian_female_geometry.jpg"
+            alt="warped_ethan_to_asian_female_geometry.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Shape and Appearance</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/morphed_ethan_and_asian_female.jpg"
+            alt="morphed_ethan_and_asian_female.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>Here are the triangulations of both average Chinese male and female faces.</p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Triangulation of Cropped and Downscaled Average Chinese Male Face</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/triangulation_avg_asian_male_face.jpg"
+            alt="triangulation_avg_asian_male_face.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Triangulation of Cropped and Downscaled Average Chinese Female Face</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/triangulation_avg_asian_female_face.jpg"
+            alt="triangulation_avg_asian_female_face.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>
+      Bells and Whistles #2: Use one of the datasets to compute a PCA basis for the face space...
+    </h3>
+
+    <p>
+      Using <code>sklearn.decomposition.PCA</code> with <code>n_components=0.95</code>, I computed a
+      PCA basis for the face space of the FEI non-smiling dataset. Here are the eigenfaces with the
+      top 10 largest singular values.
+    </p>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">Top 10 Eigenvalues</h4>
+        <div class="image-wrapper" style="width: 1200px">
+          <img
+            src="media/bells_and_whistles/eigenfaces_fei_non_smiling.jpg"
+            alt="eigenfaces_fei_non_smiling.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now using the top 32 PCA components, we can compare the caricatures of raw images projected to
+      the PCA basis vs. those in the original basis. Here, we can see that PCA performs well by
+      capturing the unique facial features, specifically the eys, and changes of color intensity
+      among features and including less noise. The caricature in the original basis lacks eye and
+      hair color, as both colors look the same as the person's facial skin color. Using the original
+      basis also makes us amplify each pixel without any filtering, so the exaggeration doesn't
+      produce images with appealing or with contrast as noticeable as the images produced by using
+      the PCA basis.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">25a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_25a.jpg"
+            alt="comparison_pca_idx_25a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">50a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_50a.jpg"
+            alt="comparison_pca_idx_50a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">75a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_75a.jpg"
+            alt="comparison_pca_idx_75a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">100a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_100a.jpg"
+            alt="comparison_pca_idx_100a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Lastly, we can generate random faces with the following process. First, we randomly sample
+      weights from $[-1.0, 1.0]$ and use them to scale the top 32 principal components to
+      reconstruct images. Then, we take the sum of this weighted average. From the beginning, we
+      reshape images before we display them since projecting onto the PCA basis gives us the
+      flattened 1D vector representation of our images. Some random faces can be seen below.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item" style="width: 1200px">
+        <h4 class="image-title">4 Random Faces Generated with PCA</h4>
+        <div class="image-wrapper">
+          <img src="media/bells_and_whistles/pca_4_random_faces.jpg" alt="pca_4_random_faces.jpg" />
         </div>
       </div>
     </div>
