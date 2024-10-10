@@ -472,7 +472,10 @@
 
     <h2>Bells and Whistles</h2>
 
-    <h3>Change age/gender/ethnicity/smile/etc of your (or your friend's) face...</h3>
+    <h3>
+      Bells and Whistles #1: Change age/gender/ethnicity/smile/etc of your (or your friend's)
+      face...
+    </h3>
 
     <p>
       I chose to warp and morph my face to and with an average Southeast Asian male face that I got
@@ -541,5 +544,104 @@
         </div>
       </div>
     </div>
+
+    <h3>
+      Bells and Whistles #2: Use one of the datasets to compute a PCA basis for the face space...
+    </h3>
+
+    <p>
+      Using <code>sklearn.decomposition.PCA</code> with <code>n_components=0.95</code>, I computed a
+      PCA basis for the face space of the FEI non-smiling dataset. Here are the eigenfaces with the
+      top 10 largest singular values.
+    </p>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <h4 class="image-title">Top 10 Eigenvalues</h4>
+        <div class="image-wrapper" style="width: 1200px">
+          <img
+            src="media/bells_and_whistles/eigenfaces_fei_non_smiling.jpg"
+            alt="eigenfaces_fei_non_smiling.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now using the top 32 PCA components, we can compare the caricatures of raw images projected to
+      the PCA basis vs. those in the original basis. Here, we can see that PCA performs well by
+      capturing the unique facial features, specifically the eys, and changes of color intensity
+      among features and including less noise. The caricature in the original basis lacks eye and
+      hair color, as both colors look the same as the person's facial skin color. Using the original
+      basis also makes us amplify each pixel without any filtering, so the exaggeration doesn't
+      produce images with appealing or with contrast as noticeable as the images produced by using
+      the PCA basis.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">25a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_25a.jpg"
+            alt="comparison_pca_idx_25a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">50a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_50a.jpg"
+            alt="comparison_pca_idx_50a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">75a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_75a.jpg"
+            alt="comparison_pca_idx_75a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">100a</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/comparison_pca_idx_100a.jpg"
+            alt="comparison_pca_idx_100a.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Lastly, we can generate random faces with the following process. First, we randomly sample
+      weights from $[-1.0, 1.0]$ and use them to scale the top 32 principal components to
+      reconstruct images. Then, we take the sum of this weighted average. From the beginning, we
+      reshape images before we display them since projecting onto the PCA basis gives us the
+      flattened 1D vector representation of our images. Some random faces can be seen below.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item" style="width: 1200px">
+        <h4 class="image-title">4 Random Faces Generated with PCA</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/bells_and_whistles/pca_4_random_faces.jpg"
+            alt="pca_4_random_faces.jpg"
+          />
+        </div>
+      </div>
+    </div>
+    
   </body>
 </html>
