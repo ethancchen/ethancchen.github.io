@@ -43,10 +43,55 @@
     <p>This project aims to</p>
 
     <h2>Part 1: Shoot the Pictures</h2>
-    
+
     <p></p>
 
     <h2>Part 2: Recover Homographies</h2>
+
+    <p>To recover homographies, we can solve this system of equations</p>
+
+    <!-- <div class="large-mathjax">$x = 5$</div> -->
+
+    <p>
+      This is equivalent to solving for the vector of $H$ values in $AH = B$, where in $A$, $B$,
+      $x_i, y_i$ are the coordinates of the source image and $x_i^\prime, y_i^\prime$ are the
+      coordinates of the destination image, and $i$ is the number of pairs of correspondence points.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+      $
+      \begin{bmatrix}
+        x_1 & y_1 & 1 & 0 & 0 & 0 & -x_1^\prime x_1 & -x_1^\prime y_1 \\
+        0 & 0 & 0 & x_1 & y_1 & 1 & -y_1^\prime x_1 & -y_1^\prime y_1 \\
+        x_2 & y_2 & 1 & 0 & 0 & 0 & -x_2^\prime x_2 & -x_2^\prime y_2 \\
+        0 & 0 & 0 & x_2 & y_2 & 1 & -y_2^\prime x_2 & -y_2^\prime y_2 \\
+        x_3 & y_3 & 1 & 0 & 0 & 0 & -x_3^\prime x_3 & -x_3^\prime y_3 \\
+        0 & 0 & 0 & x_3 & y_3 & 1 & -y_3^\prime x_3 & -y_3^\prime y_3 \\
+        & & & & \vdots & & &
+      \end{bmatrix}
+      \begin{bmatrix}
+        h_1 \\
+        h_2 \\
+        h_3 \\
+        h_4 \\
+        h_5 \\
+        h_6 \\
+        h_7 \\
+        h_8
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        x_1^\prime \\
+        y_1^\prime \\
+        x_2^\prime \\
+        y_2^\prime \\
+        x_3^\prime \\
+        y_3^\prime \\
+        \vdots
+      \end{bmatrix}
+      $
+    </div>
 
     <p></p>
 
@@ -55,6 +100,9 @@
     <p></p>
 
     <h2>Part 4: Image Rectification</h2>
+
+    Find points on the planar surface. Destination points should be a rectangle, like for the
+    keyboard.
 
     <p></p>
 
@@ -65,6 +113,5 @@
     <h2>Part 6: Bells and Whistles</h2>
 
     <p></p>
-
   </body>
 </html>
