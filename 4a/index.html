@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ["$", "$"],
+          ["\\(", "\\)"],
+        ],
+      },
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+  ></script>
+  <head>
+    <title>Proj 4a</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Project 4a - Image Warping and Mosaicing</h1>
+
+    <h3>By Ethan Chen</h3>
+
+    <h2>Introduction</h2>
+
+    <p>
+      This project aims to use homographies to warp images into another image space and then
+      seamlessly blend them into a mosaic.
+    </p>
+
+    <h2>Part 1: Shoot the Pictures</h2>
+
+    <p>
+      I took images on my phone with the auto-light adjustment feature turned off while keeping my
+      hand still and adjusting the angle while keeping the center of projection (COP) of my phone in
+      the same location. I ensured I had some overlap amongst the set of images and included
+      noticeably different elements, like a lamp post or a new building, in those images.
+      <br />
+      <br />
+      I have included the raw images with points in a later section so they can be closer to the
+      warped images and blended mosaics.
+    </p>
+
+    <p>Here are the six sets of my original images with the correspondence points drawn on.</p>
+
+    <h3 class="h3-centered">BWW 1211</h3>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Left</h4>
+        <div class="image-wrapper">
+          <img src="media/output_images/bww_1211_left_points.jpg" alt="bww_1211_left_points.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the left image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_1211_middle_with_left_points.jpg"
+            alt="bww_1211_middle_with_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the right image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_1211_middle_with_left_points.jpg"
+            alt="bww_1211_middle_with_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_1211_right_points.jpg"
+            alt="bww_1211_right_points.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Cory Hallway</h3>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Left</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_left_points.jpg"
+            alt="cory_hallway_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the left image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_middle_with_left_points.jpg"
+            alt="cory_hallway_middle_with_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the right image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_middle_with_right_points.jpg"
+            alt="cory_hallway_middle_with_right_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_right_points.jpg"
+            alt="cory_hallway_right_points.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Cory Elevators</h3>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Left</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_left_points.jpg"
+            alt="cory_elevators_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the left image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_with_left_points.jpg"
+            alt="cory_elevators_middle_with_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the right image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_with_right_points.jpg"
+            alt="cory_elevators_middle_with_right_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_points.jpg"
+            alt="cory_elevators_right_points.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">BWW Outside Window of 2nd Floor</h3>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Left</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_floor2_left_points.jpg"
+            alt="bww_floor2_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the left image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_floor2_middle_with_left_points.jpg"
+            alt="bww_floor2_middle_with_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the right image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_floor2_middle_with_right_points.jpg"
+            alt="bww_floor2_middle_with_right_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_floor2_right_points.jpg"
+            alt="bww_floor2_right_points.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Campanile During the Day</h3>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Left</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_day_left_points.jpg"
+            alt="campanile_day_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the left image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_day_middle_with_left_points.jpg"
+            alt="campanile_day_middle_with_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the right image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_day_middle_with_right_points.jpg"
+            alt="campanile_day_middle_with_right_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_day_right_points.jpg"
+            alt="campanile_day_right_points.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Campanile During the Night</h3>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Left</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_night_left_points.jpg"
+            alt="campanile_night_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the left image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_night_middle_with_left_points.jpg"
+            alt="campanile_night_middle_with_left_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle (to warp the right image into)</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_night_middle_with_right_points.jpg"
+            alt="campanile_night_middle_with_right_points.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_night_right_points.jpg"
+            alt="campanile_night_right_points.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h2>Part 2: Recover Homographies</h2>
+
+    <p>
+      To recover homographies - which is how we transform/warp one image to another's
+      <b>projective plane</b>, we can solve a system of equations, which is equivalent to solving
+      for the vector $h$ of values in $Ah = b$, where in $A$, $b$, $x_i, y_i$ are the coordinates of
+      the source image and $x_i^\prime, y_i^\prime$ are the coordinates of the destination image,
+      and $i$ is the number of pairs of correspondence points.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+      $
+      \begin{bmatrix}
+        x_1 & y_1 & 1 & 0 & 0 & 0 & -x_1^\prime x_1 & -x_1^\prime y_1 \\
+        0 & 0 & 0 & x_1 & y_1 & 1 & -y_1^\prime x_1 & -y_1^\prime y_1 \\
+        x_2 & y_2 & 1 & 0 & 0 & 0 & -x_2^\prime x_2 & -x_2^\prime y_2 \\
+        0 & 0 & 0 & x_2 & y_2 & 1 & -y_2^\prime x_2 & -y_2^\prime y_2 \\
+        x_3 & y_3 & 1 & 0 & 0 & 0 & -x_3^\prime x_3 & -x_3^\prime y_3 \\
+        0 & 0 & 0 & x_3 & y_3 & 1 & -y_3^\prime x_3 & -y_3^\prime y_3 \\
+        & & & & \vdots & & &
+      \end{bmatrix}
+      \begin{bmatrix}
+        h_1 \\
+        h_2 \\
+        h_3 \\
+        h_4 \\
+        h_5 \\
+        h_6 \\
+        h_7 \\
+        h_8
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        x_1^\prime \\
+        y_1^\prime \\
+        x_2^\prime \\
+        y_2^\prime \\
+        x_3^\prime \\
+        y_3^\prime \\
+        \vdots
+      \end{bmatrix}
+      $
+    </div>
+
+    <p>Then, we can reshape the homography matrix to be 3 by 3.</p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+      $
+      H =
+      \begin{bmatrix}
+        h_1 & h_2 & h_3 \\
+        h_4 & h_5 & h_6 \\
+        h_7 & h_8 & 1 \\
+      \end{bmatrix}
+      $
+    </div>
+
+    <h2>Part 3: Warp the Images</h2>
+
+    Here are some examples of the images being warped with the corresponding homography matrices.
+
+    <h3 class="h3-centered">BWW Outside Window of 2nd Floor</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Left Warped to Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_warped_left_to_middle.jpg"
+            alt="bww_warped_left_to_middle.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right Warped to Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_warped_right_to_middle.jpg"
+            alt="bww_warped_right_to_middle.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">BWW 1211</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Left Warped to Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_1211_warped_left_to_middle.jpg"
+            alt="bww_1211_warped_left_to_middle.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Right Warped to Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_1211_warped_right_to_middle.jpg"
+            alt="bww_1211_warped_right_to_middle.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h2>Part 4: Image Rectification</h2>
+
+    <p>
+      For this part, we can choose two sets of 4 points - the first set are the original 4 corners
+      of the object in the image we want to rectify and the second set are the 4 corners we want the
+      image to take up, which we expect to be a front-facing square or rectangle.
+    </p>
+
+    <p>Here are the two sets of points on two images, followed by the rectified image.</p>
+
+    <h3 class="h3-centered">Crest</h3>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">First Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/crest_with_points_src.jpg"
+            alt="crest_with_points_src.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Second Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/crest_with_points_dst.jpg"
+            alt="crest_with_points_dst.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Rectified</h4>
+        <div class="image-wrapper">
+          <img src="media/output_images/crest_rectified.jpg" alt="crest_rectified.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Light Switches</h3>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">First Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/light_switches_with_points_src.jpg"
+            alt="light_switches_with_points_src.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Second Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/light_switches_with_points_dst.jpg"
+            alt="light_switches_with_points_dst.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Rectified</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/light_switches_rectified.jpg"
+            alt="light_switches_rectified.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h2>Part 5: Blend the Images into a Mosaic</h2>
+
+    <p>
+      I tried two approaches - naively and a more complex one - to blend each set of 3 images into
+      one mosaic image. For both, I first warped the left image to middle image and warped the right
+      image to middle image and found my final canvas by taking the corresponding min and max of the
+      transformed corners.
+      <br />
+      <br />
+      To naively blend the images, I directly added the pixel values of both warped images mentioned
+      above and then used a mask to do the same for the middle image, which didn't need to be warped
+      since I chose this as the "reference" image. Using a mask was essentially the same as directly
+      adding the pixel values as since I didn't use distance transform in the approach.
+      <br />
+      <br />
+      My more complex approach was to use Gaussian and Laplacian stacks to blend like I did in
+      Project 2 and also distance transforms. Like Aayush Gupta, a student in a previous semester of
+      CS 180, did, I used a mutually exclusive mask, which is calculated by comparing the
+      <code>scipy.distance_transform_edt</code> applied onto the masks. I had two rounds of this
+      process - the first one was on the warped mask left and warped mask right and second round was
+      on the result of blending those two images and the middle image. I used 5 levels and
+      <code>sigma = 4</code> and <code>kernel_size = 6 * 4 = 24</code> for convolving images, just
+      like I did in Project 2.
+    </p>
+
+    <h3 class="h3-centered">BWW 1211</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Naive</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_1211_naive_blending.jpg"
+            alt="bww_1211_naive_blending.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gaussian and Laplacian Stacks</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_1211_blended_mosaic.jpg"
+            alt="bww_1211_blended_mosaic.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Cory Hallway</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Naive</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_naive_blending.jpg"
+            alt="cory_hallway_naive_blending.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gaussian and Laplacian Stacks</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_blended_mosaic.jpg"
+            alt="cory_hallway_blended_mosaic.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Cory Elevators</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Naive</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_naive_blending.jpg"
+            alt="cory_elevators_naive_blending.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gaussian and Laplacian Stacks</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_blended_mosaic.jpg"
+            alt="cory_elevators_blended_mosaic.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">BWW Outside Window of 2nd Floor</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Naive</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_floor2_naive_blending.jpg"
+            alt="bww_floor2_naive_blending.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gaussian and Laplacian Stacks</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/bww_floor2_blended_mosaic.jpg"
+            alt="bww_floor2_blended_mosaic.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Campanile During the Night</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Naive</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_night_naive_blending.jpg"
+            alt="campanile_night_naive_blending.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gaussian and Laplacian Stacks</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_night_blended_mosaic.jpg"
+            alt="campanile_night_blended_mosaic.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Campanile During the Day</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Naive</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_day_naive_blending.jpg"
+            alt="campanile_day_naive_blending.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Gaussian and Laplacian Stacks</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/campanile_day_blended_mosaic.jpg"
+            alt="campanile_day_blended_mosaic.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The first three blended mosaics in the right column are my best results. They are indoors and
+      there's little fluctuation in the lighting. The latter 3 mosaics are taken with the sky and it
+      seems that my camera kept including exposure differences across the images, despite turning
+      the auto-light adjustment feature off. We can see that the more complex approach effectively
+      makes the mosaic more seamless by reducing the abrupt changes in exposure to the human eye.
+    </p>
+
+    <p></p>
+  </body>
+</html>
