@@ -414,10 +414,77 @@
 
     <h2>Part 4: Image Rectification</h2>
 
-    Find points on the planar surface. Destination points should be a rectangle, like for the
-    keyboard.
+    <p>
+      For this part, we can choose two sets of 4 points - the first set are the original 4 corners
+      of the object in the image we want to rectify and the second set are the 4 corners we want the
+      image to take up, which we expect to be a front-facing square or rectangle.
+    </p>
 
-    <p></p>
+    <p>Here are the two sets of points on two images, followed by the rectified image.</p>
+
+    <h3 class="h3-centered">Crest</h3>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">First Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/crest_with_points_src.jpg"
+            alt="crest_with_points_src.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Second Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/crest_with_points_dst.jpg"
+            alt="crest_with_points_dst.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Rectified</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/crest_rectified.jpg"
+            alt="crest_rectified.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Light Switches</h3>
+
+    <div class="image-container-3">
+      <div class="image-item">
+        <h4 class="image-title">First Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/light_switches_with_points_src.jpg"
+            alt="light_switches_with_points_src.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Second Set of Points</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/light_switches_with_points_dst.jpg"
+            alt="light_switches_with_points_dst.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Rectified</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/light_switches_rectified.jpg"
+            alt="light_switches_rectified.jpg"
+          />
+        </div>
+      </div>
+    </div>
 
     <h2>Part 5: Blend the Images into a Mosaic</h2>
 
