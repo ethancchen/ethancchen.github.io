@@ -485,7 +485,28 @@
 
     <h2>Part 5: Blend the Images into a Mosaic</h2>
 
-    <p>TBD Process</p>
+    <p>
+      I tried two approaches - naively and a more complex one - to blend each set of 3 images into
+      one mosaic image. For both, I first warped the left image to middle image and warped the right
+      image to middle image and found my final canvas by taking the corresponding min and max of the
+      transformed corners.
+      <br />
+      <br />
+      To naively blend the images, I directly added the pixel values of both warped images mentioned
+      above and then used a mask to do the same for the middle image, which didn't need to be warped
+      since I chose this as the "reference" image. Using a mask was essentially the same as directly
+      adding the pixel values as since I didn't use distance transform in the approach.
+      <br />
+      <br />
+      My more complex approach was to use Gaussian and Laplacian stacks to blend like I did in
+      Project 2 and also distance transforms. Like Aayush Gupta, a student in a previous semester of
+      CS 180, did, I used a mutually exclusive mask, which is calculated by comparing the
+      <code>scipy.distance_transform_edt</code> applied onto the masks. I had two rounds of this
+      process - the first one was on the warped mask left and warped mask right and second round was
+      on the result of blending those two images and the middle image. I used 5 levels and
+      <code>sigma = 4</code> and <code>kernel_size = 6 * 4 = 24</code> for convolving images, just
+      like I did in Project 2.
+    </p>
 
     <h3 class="h3-centered">BWW 1211</h3>
 
