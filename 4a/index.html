@@ -58,68 +58,7 @@
       warped images and blended mosaics.
     </p>
 
-    <h2>Part 2: Recover Homographies</h2>
-
-    <p>
-      To recover homographies - which is how we transform/warp one image to another's
-      <b>projective plane</b>, we can solve a system of equations, which is equivalent to solving
-      for the vector of $H$ values in $AH = B$, where in $A$, $B$, $x_i, y_i$ are the coordinates of
-      the source image and $x_i^\prime, y_i^\prime$ are the coordinates of the destination image,
-      and $i$ is the number of pairs of correspondence points.
-    </p>
-
-    <!-- prettier-ignore -->
-    <div class="large-mathjax">
-      $
-      \begin{bmatrix}
-        x_1 & y_1 & 1 & 0 & 0 & 0 & -x_1^\prime x_1 & -x_1^\prime y_1 \\
-        0 & 0 & 0 & x_1 & y_1 & 1 & -y_1^\prime x_1 & -y_1^\prime y_1 \\
-        x_2 & y_2 & 1 & 0 & 0 & 0 & -x_2^\prime x_2 & -x_2^\prime y_2 \\
-        0 & 0 & 0 & x_2 & y_2 & 1 & -y_2^\prime x_2 & -y_2^\prime y_2 \\
-        x_3 & y_3 & 1 & 0 & 0 & 0 & -x_3^\prime x_3 & -x_3^\prime y_3 \\
-        0 & 0 & 0 & x_3 & y_3 & 1 & -y_3^\prime x_3 & -y_3^\prime y_3 \\
-        & & & & \vdots & & &
-      \end{bmatrix}
-      \begin{bmatrix}
-        h_1 \\
-        h_2 \\
-        h_3 \\
-        h_4 \\
-        h_5 \\
-        h_6 \\
-        h_7 \\
-        h_8
-      \end{bmatrix}
-      =
-      \begin{bmatrix}
-        x_1^\prime \\
-        y_1^\prime \\
-        x_2^\prime \\
-        y_2^\prime \\
-        x_3^\prime \\
-        y_3^\prime \\
-        \vdots
-      \end{bmatrix}
-      $
-    </div>
-
-    <p>Then, we can reshape the homography matrix to be 3 by 3.</p>
-
-    <!-- prettier-ignore -->
-    <div class="large-mathjax">
-      $
-      H =
-      \begin{bmatrix}
-        h_1 & h_2 & h_3 \\
-        h_4 & h_5 & h_6 \\
-        h_7 & h_8 & 1 \\
-      \end{bmatrix}
-      $
-    </div>
-
-    <h2>Part 3: Warp the Images</h2>
-
-    <p>Here are the six sets of my original images with the correspondence points plotted.</p>
+    <p>Here are the six sets of my original images with the correspondence points drawn on.</p>
 
     <h3 class="h3-centered">BWW 1211</h3>
 
@@ -363,6 +302,68 @@
         </div>
       </div>
     </div>
+
+    <h2>Part 2: Recover Homographies</h2>
+
+    <p>
+      To recover homographies - which is how we transform/warp one image to another's
+      <b>projective plane</b>, we can solve a system of equations, which is equivalent to solving
+      for the vector of $H$ values in $AH = B$, where in $A$, $B$, $x_i, y_i$ are the coordinates of
+      the source image and $x_i^\prime, y_i^\prime$ are the coordinates of the destination image,
+      and $i$ is the number of pairs of correspondence points.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+      $
+      \begin{bmatrix}
+        x_1 & y_1 & 1 & 0 & 0 & 0 & -x_1^\prime x_1 & -x_1^\prime y_1 \\
+        0 & 0 & 0 & x_1 & y_1 & 1 & -y_1^\prime x_1 & -y_1^\prime y_1 \\
+        x_2 & y_2 & 1 & 0 & 0 & 0 & -x_2^\prime x_2 & -x_2^\prime y_2 \\
+        0 & 0 & 0 & x_2 & y_2 & 1 & -y_2^\prime x_2 & -y_2^\prime y_2 \\
+        x_3 & y_3 & 1 & 0 & 0 & 0 & -x_3^\prime x_3 & -x_3^\prime y_3 \\
+        0 & 0 & 0 & x_3 & y_3 & 1 & -y_3^\prime x_3 & -y_3^\prime y_3 \\
+        & & & & \vdots & & &
+      \end{bmatrix}
+      \begin{bmatrix}
+        h_1 \\
+        h_2 \\
+        h_3 \\
+        h_4 \\
+        h_5 \\
+        h_6 \\
+        h_7 \\
+        h_8
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        x_1^\prime \\
+        y_1^\prime \\
+        x_2^\prime \\
+        y_2^\prime \\
+        x_3^\prime \\
+        y_3^\prime \\
+        \vdots
+      \end{bmatrix}
+      $
+    </div>
+
+    <p>Then, we can reshape the homography matrix to be 3 by 3.</p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+      $
+      H =
+      \begin{bmatrix}
+        h_1 & h_2 & h_3 \\
+        h_4 & h_5 & h_6 \\
+        h_7 & h_8 & 1 \\
+      \end{bmatrix}
+      $
+    </div>
+
+    <h2>Part 3: Warp the Images</h2>
+
 
     <h2>Part 4: Image Rectification</h2>
 
