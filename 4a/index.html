@@ -746,10 +746,9 @@
       <br />
       <br />
       Then, we can loop over each descriptor and apply the Lowe's Ratio test on the ratio of the
-      distance between the first and second nearest neighbo. If it's below the
-      threshold, we can add the feature descriptor and its nearest neighbor to our modified set.
-      Finally, we will pass in the two resulting lists of modified descriptors to RANSAC in the next
-      step.
+      distance between the first and second nearest neighbo. If it's below the threshold, we can add
+      the feature descriptor and its nearest neighbor to our modified set. Finally, we will pass in
+      the two resulting lists of modified descriptors to RANSAC in the next step.
     </p>
 
     <p>Here are the feature descriptors.</p>
@@ -806,13 +805,41 @@
 
     <h3>Step 4: Use a robust method (RANSAC) to compute a homography</h3>
 
+    Now, we can proceed with our 4-point RANSAC algorithm, which will help us find the best
+    homography to warp one image into another. Then, we will proceed with the same distance
+    transforms for mutually exclusive masks and Gaussian and Laplacian stacks (5 levels) to blend as
+    we did in Part A. The RANSAC procedure is as follows (for each iteration):
+
+    <ol>
+      <li>
+        Randomly sample without replacement 4 pairs of points from the feature matched ANMS
+        coordinates
+      </li>
+      <li>Compute the homography $H$ from using those 4 pairs</li>
+      <li>Calculate the resulting set of points by warping the source points with $H$</li>
+      <li>
+        Calculate the number of inliers, which are points that have a Euclidean distance from our
+        destination points $<$ a <code>threshold</code> that we choose
+      </li>
+      <li>
+        Update our best $H$ <code>best_H</code> and chosen (largest so far) inlier set
+        <code>best_inliers</code> if the number of inliers from this current iteration exceeds that
+        of the current <code>best_inliers</code>
+      </li>
+    </ol>
+
+    <p>
+      We can then proceed to the rest of the algorithm to create our mosaic by using the
+      <code>best_H</code> we got from RANSAC.
+    </p>
+
     <h3>Step 5: Produce a mosaic</h3>
 
     Here are the manually and automatically stiched results. In Part A, I created mosaics of 3
     images but here in Part B, I used two images, specifically the middle and the right, since the
     exposure difference was much smaller.
 
-    <h3 class="h3-centered">Cory Hallway</h3>
+    <h3 class="h3-centered">Cory Hallway (RANSAC <code>threshold</code> = 4)</h3>
 
     <div class="image-container-2">
       <div class="image-item">
@@ -832,7 +859,7 @@
       </div>
     </div>
 
-    <h3 class="h3-centered">Blake Street Facing North</h3>
+    <h3 class="h3-centered">Blake Street Facing North (RANSAC <code>threshold</code> = 4)</h3>
 
     <div class="image-container-2">
       <div class="image-item">
@@ -852,7 +879,7 @@
       </div>
     </div>
 
-    <h3 class="h3-centered">Cory Elevators</h3>
+    <h3 class="h3-centered">Cory Elevators (RANSAC <code>threshold</code> = 4)</h3>
 
     <div class="image-container-2">
       <div class="image-item">
