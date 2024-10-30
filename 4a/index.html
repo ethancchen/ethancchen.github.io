@@ -25,7 +25,7 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
   ></script>
   <head>
-    <title>Proj 4a</title>
+    <title>Proj 4</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -34,7 +34,9 @@
     </style>
   </head>
   <body>
-    <h1>Project 4a - Image Warping and Mosaicing</h1>
+    <h1>Project 4 - [Auto] Stitching Photo Mosaics</h1>
+
+    <h2>Part A - Image Warping and Mosaicing</h2>
 
     <h3>By Ethan Chen</h3>
 
@@ -654,6 +656,262 @@
       makes the mosaic more seamless by reducing the abrupt changes in exposure to the human eye.
     </p>
 
-    <p></p>
+    <h2>Part B - Feature Matching for Autostitching</h2>
+
+    <p>
+      In this project, we follow some algorithms and methods from the paper
+      <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj4/Papers/MOPS.pdf"
+        >Multi-Image Matching using Multi-Scale Oriented Patches” by Brown et al</a
+      >.
+    </p>
+
+    <h3>Step 1: Detecting corner features in an image</h3>
+
+    We can use the function <code>get_harris_corners</code> from the starter code to get the Harris
+    corners on each image that we want to stitch together. Here are examples of my two results.
+
+    <h3 class="h3-centered">Cory Elevators</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_detected_harris_corners.png"
+            alt="cory_elevators_right_detected_harris_corners.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_detected_harris_corners.png"
+            alt="cory_elevators_middle_detected_harris_corners.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Step 2: Extracting a feature descriptor for each feature point</h3>
+
+    From Brown et al, we can use the equation below.
+    <br />
+    <br />
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $r_i = \underset j \min \lvert \mathbf x_i - \mathbf x_j \rvert, \text{s.t.} f(\mathbf x_i) < c_{\text{robust}} f(\mathbf x_j), \mathbf x_j \in \mathcal{I}$
+    </div>
+
+    <p>
+      It aims to filter out corners to get a uniform distribution of corners, selecting the
+      strongest ones while ensuring diversity spatially. We use a robustness factor called
+      <code>c_robust</code> in our suppression condition and use the Euclidean distances between
+      corners so we select ones that aren't too near one another. We aim to maximize the minimum
+      radii, which gives us spatial uniformity amongst corners.
+    </p>
+
+    <h3 class="h3-centered">Cory Elevators</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_anms_harris_corners.png"
+            alt="cory_elevators_right_anms_harris_corners.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_anms_harris_corners.png"
+            alt="cory_elevators_middle_anms_harris_corners.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Step 3: Matching these feature descriptors between two images</h3>
+
+    <p>
+      Now, using the corner coordinates modified/filtered by ANMS, we can extract the feature
+      descriptors. We achieve this by looping over each of the coordinates, padding them with the
+      half window size, resizing the 40x40 window into an 8x8 one, performing bias/gain
+      normalization and then flattening it. This helps us capture the image structure local to the
+      region around each corner.
+      <br />
+      <br />
+      Then, we can loop over each descriptor and apply the Lowe's Ratio test on the ratio of the
+      distance between the first and second nearest neighbo. If it's below the threshold, we can add
+      the feature descriptor and its nearest neighbor to our modified set. Finally, we will pass in
+      the two resulting lists of modified descriptors to RANSAC in the next step.
+    </p>
+
+    <p>Here are the feature descriptors.</p>
+
+    <h3 class="h3-centered">Cory Elevators (Before Feature Matching)</h3>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_feature_descriptors_before_feature_matching.png"
+            alt="cory_elevators_right_feature_descriptors_before_feature_matching.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_feature_descriptors_before_feature_matching.png"
+            alt="cory_elevators_middle_feature_descriptors_before_feature_matching.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Cory Elevators (After Feature Matching)</h3>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_feature_descriptors_after_feature_matching.png"
+            alt="cory_elevators_right_feature_descriptors_after_feature_matching.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_feature_descriptors_after_feature_matching.png"
+            alt="cory_elevators_middle_feature_descriptors_after_feature_matching.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Step 4: Use a robust method (RANSAC) to compute a homography</h3>
+
+    Now, we can proceed with our 4-point RANSAC algorithm, which will help us find the best
+    homography to warp one image into another. Then, we will proceed with the same distance
+    transforms for mutually exclusive masks and Gaussian and Laplacian stacks (5 levels) to blend as
+    we did in Part A. The RANSAC procedure is as follows (for each iteration):
+
+    <ol>
+      <li>
+        Randomly sample without replacement 4 pairs of points from the feature matched ANMS
+        coordinates
+      </li>
+      <li>Compute the homography $H$ from using those 4 pairs</li>
+      <li>Calculate the resulting set of points by warping the source points with $H$</li>
+      <li>
+        Calculate the number of inliers, which are points that have a Euclidean distance from our
+        destination points $<$ a <code>threshold</code> that we choose
+      </li>
+      <li>
+        Update our best $H$ <code>best_H</code> and chosen (largest so far) inlier set
+        <code>best_inliers</code> if the number of inliers from this current iteration exceeds that
+        of the current <code>best_inliers</code>
+      </li>
+    </ol>
+
+    <p>
+      We can then proceed to the rest of the algorithm to create our mosaic by using the
+      <code>best_H</code> we got from RANSAC.
+    </p>
+
+    <h3>Step 5: Produce a mosaic</h3>
+
+    Here are the manually and automatically stiched results. In Part A, I created mosaics of 3
+    images but here in Part B, I used two images, specifically the middle and the right, since the
+    exposure difference was much smaller.
+
+    <h3 class="h3-centered">Cory Elevators (RANSAC <code>threshold</code> = 4)</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Manually Stitched Mosaic</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_to_middle_mosaic_manual.jpg"
+            alt="cory_elevators_right_to_middle_mosaic_manual.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Automatically Stitched Mosaic</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_to_middle_mosaic_auto.png"
+            alt="cory_elevators_right_to_middle_mosaic_auto.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Cory Hallway (RANSAC <code>threshold</code> = 4)</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Manually Stitched Mosaic</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_right_to_middle_mosaic_manual.jpg"
+            alt="cory_hallway_right_to_middle_mosaic_manual.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Automatically Stitched Mosaic</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_hallway_mosaic_auto.png"
+            alt="cory_hallway_mosaic_auto.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Blake Street Facing North (RANSAC <code>threshold</code> = 4)</h3>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Manually Stitched Mosaic</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/blake_facing_north_right_to_middle_mosaic_manual.jpg"
+            alt="blake_facing_north_right_to_middle_mosaic_manual.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Automatically Stitched Mosaic</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/blake_facing_north_right_to_middle_mosaic_auto.png"
+            alt="blake_facing_north_right_to_middle_mosaic_auto.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>What I learned</h3>
+
+    It was nice to progress from manually selecting points in Part A - something as fundamental as
+    system of equations could be used for such cool computer vision techniques - and seeing the math
+    behind the auto-detection in Part B that could automate the entire process.
   </body>
 </html>
