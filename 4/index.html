@@ -668,7 +668,9 @@
     <h3>Step 1: Detecting corner features in an image</h3>
 
     We can use the function <code>get_harris_corners</code> from the starter code to get the Harris
-    corners on each image that we want to stitch together. Here are examples of my two results.
+    corners on each image that we want to stitch together. Here are examples of my two results. I
+    chose a <code>min_distance = 5</code>, which is the minimum distance we allow to separate peaks,
+    to pass into <code>skimage.feature.peak_local_max</code>
 
     <h3 class="h3-centered">Cory Elevators</h3>
 
