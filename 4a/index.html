@@ -737,6 +737,73 @@
 
     <h3>Step 3: Matching these feature descriptors between two images</h3>
 
+    <p>
+      Now, using the corner coordinates modified/filtered by ANMS, we can extract the feature
+      descriptors. We achieve this by looping over each of the coordinates, padding them with the
+      half window size, resizing the 40x40 window into an 8x8 one, performing bias/gain
+      normalization and then flattening it. This helps us capture the image structure local to the
+      region around each corner.
+      <br />
+      <br />
+      Then, we can loop over each descriptor and apply the Lowe's Ratio test on the ratio of the
+      distance between the nearest neighbor and the second nearest neighbor. If it's below the
+      threshold, we can add the feature descriptor and its nearest neighbor to our modified set.
+      Finally, we will pass in the two resulting lists of modified descriptors to RANSAC in the next
+      step.
+    </p>
+
+    <p>Here are the feature descriptors.</p>
+
+    <h3 class="h3-centered">Cory Elevators (Before Feature Matching)</h3>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_feature_descriptors_before_feature_matching.png"
+            alt="cory_elevators_right_feature_descriptors_before_feature_matching.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_feature_descriptors_before_feature_matching.png"
+            alt="cory_elevators_middle_feature_descriptors_before_feature_matching.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h3-centered">Cory Elevators (After Feature Matching)</h3>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Right</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_feature_descriptors_after_feature_matching.png"
+            alt="cory_elevators_right_feature_descriptors_after_feature_matching.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Middle</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_feature_descriptors_after_feature_matching.png"
+            alt="cory_elevators_middle_feature_descriptors_after_feature_matching.jpg"
+          />
+        </div>
+      </div>
+    </div>
+
     <h3>Step 4: Use a robust method (RANSAC) to compute a homography</h3>
 
     <h3>Step 5: Produce a mosaic</h3>
