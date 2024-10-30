@@ -658,7 +658,38 @@
 
     <h2>Part B - Feature Matching for Autostitching</h2>
 
+    <p>
+      In this project, we follow some algorithms and methods from the paper
+      <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj4/Papers/MOPS.pdf"
+        >Multi-Image Matching using Multi-Scale Oriented Patches” by Brown et al</a
+      >.
+    </p>
+
     <h3>Step 1: Detecting corner features in an image</h3>
+
+    We can use the function <code>get_harris_corners</code> from the starter code to get the Harris
+    corners on each image that we want to stitch together. Here are examples of my two results.
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title"></h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_right_detected_harris_corners.png"
+            alt="cory_elevators_right_detected_harris_corners.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Middle Image</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/output_images/cory_elevators_middle_detected_harris_corners.png"
+            alt="cory_elevators_middle_detected_harris_corners.jpg"
+          />
+        </div>
+      </div>
+    </div>
 
     <h3>Step 2: Extracting a feature descriptor for each feature point</h3>
 
@@ -669,7 +700,8 @@
     <h3>Step 5: Produce a mosaic</h3>
 
     Here are the manually and automatically stiched results. In Part A, I created mosaics of 3
-    images but here in Part B, I used two images, specifically the middle and the right, since the exposure difference was much smaller.
+    images but here in Part B, I used two images, specifically the middle and the right, since the
+    exposure difference was much smaller.
 
     <h3 class="h3-centered">Cory Hallway</h3>
 
