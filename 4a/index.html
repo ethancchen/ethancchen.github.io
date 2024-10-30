@@ -695,6 +695,23 @@
 
     <h3>Step 2: Extracting a feature descriptor for each feature point</h3>
 
+    From Brown et al, we can use the equation below.
+    <br />
+    <br />
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $r_i = \underset j \min \lvert \mathbf x_i - \mathbf x_j \rvert, \text{s.t.} f(\mathbf x_i) < c_{\text{robust}} f(\mathbf x_j), \mathbf x_j \in \mathcal{I}$
+    </div>
+
+    <p>
+      It aims to filter out corners to get a uniform distribution of corners, selecting the
+      strongest ones while ensuring diversity spatially. We use a robustness factor called
+      <code>c_robust</code> in our suppression condition and use the Euclidean distances between
+      corners so we select ones that aren't too near one another. We aim to maximize the minimum
+      radii, which gives us spatial uniformity amongst corners.
+    </p>
+
     <h3 class="h3-centered">Cory Elevators</h3>
 
     <div class="image-container-2">
