@@ -733,6 +733,44 @@
 
     <h4>2.4-2.5: Adding Class-Conditioning to UNet + Training + Sampling</h4>
 
+    <p>
+      Last but not least, we can condition on the classes in our UNet by adding 2 more FCBlocks that
+      take in class-conditioning vectors <code>c</code> and dropout with probability 10%, in which
+      case we set <code>c</code> to 0. We will follow algorithms from the paper to implement
+      training and sampling. Below is our log loss from training.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/cc_log_loss.png" alt="cc_log_loss.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>We use $\gamma = 5.0$ in CFG for sampling.</p>
+
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <h4 class="image-title">Sample after 5 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/cc_5_epochs_sample.png" alt="cc_5_epochs_sample.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sample after 20 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/cc_20_epochs_sample.png" alt="cc_20_epochs_sample.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      These samples are much clearer and refined than time-conditioned as we can see thicker strokes
+      and more distinguishable digits. There are some stray marks but they do not affect the overall
+      image of the digits.
+    </p>
+
     <h3>What I learned</h3>
 
     <p>
