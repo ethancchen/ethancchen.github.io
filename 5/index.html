@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ["$", "$"],
+          ["\\(", "\\)"],
+        ],
+      },
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+  ></script>
+  <head>
+    <title>Proj 5</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Project 5 - Fun With Diffusion Models!</h1>
+
+    <h2>Part A - The Power of Diffusion Models!</h2>
+
+    <h3>By Ethan Chen</h3>
+
+    <h2>Introduction</h2>
+
+    <p>This project aims to implement and deploy diffusion models to generate images.</p>
+
+    <h2>Part 1: Sampling Loops</h2>
+
+    <h3>Part 1.1: Implementing the Forward Process</h3>
+
+    <p>We start by implementing the forward function to add noise to a clean image.</p>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Berkeley Campanile</h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/campanile_modified.jpg" alt="campanile_modified.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_250.png" alt="noisy_campanile_t_250.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_500.png" alt="noisy_campanile_t_500.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_750.png" alt="noisy_campanile_t_750.png" />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.2: Classical Denoising</h3>
+
+    <p>
+      Now, we can use Gaussian blur filtering to attempt to remove the noise. As we can see, this
+      method does not really work since we cannot clearly distinguish the campanile in the image.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/noisy_and_blurred_campanile_t_250.png"
+            alt="noisy_and_blurred_campanile_t_250.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/noisy_and_blurred_campanile_t_500.png"
+            alt="noisy_and_blurred_campanile_t_500.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/noisy_and_blurred_campanile_t_750.png"
+            alt="noisy_and_blurred_campanile_t_750.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.3: One-Step Denoising</h3>
+
+    <p>
+      Using <code>stage1.unet</code> and the embedings for the prompt "a high quality photo", we can
+      try to denoise in one step. To remove the estimated noise from the image, we can follow the
+      equation below.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon \quad \text{where } \epsilon \sim N(0,1)
+        $
+    </div>
+
+    <br />
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/noisy_and_denoised_campanile_t_250.png"
+            alt="noisy_and_denoised_campanile_t_250.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/noisy_and_denoised_campanile_t_500.png"
+            alt="noisy_and_denoised_campanile_t_500.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/noisy_and_denoised_campanile_t_750.png"
+            alt="noisy_and_denoised_campanile_t_750.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.4: Iterative Denoising</h3>
+
+    <p>
+      To improve the result from the one-step denoising, we can iteratively denoise. We can use 1000
+      timesteps and skip with strides, in this case we use a stride of 30. We can follow the
+      equation below and start at <code>i_start = 10</code>.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        x_{t^\prime} = \frac{\sqrt{\bar{\alpha}_{t^\prime}}\beta_t}{1-\bar{\alpha}_t}x_0 + \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t^\prime})}{1-\bar{\alpha}_t}x_t + v_\sigma
+        $
+    </div>
+
+    <br />
+
+    <div class="image-container-5">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_690.png" alt="noisy_campanile_t_690.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_540.png" alt="noisy_campanile_t_540.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_390.png" alt="noisy_campanile_t_390.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_240.png" alt="noisy_campanile_t_240.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/noisy_campanile_t_90.png" alt="noisy_campanile_t_90.png" />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <h4 class="image-title">Berkeley Campanile</h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/campanile_modified.jpg" alt="campanile_modified.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/iterative_denoised_campanile.png"
+            alt="iterative_denoised_campanile.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/one_step_denoised_campanile.png"
+            alt="one_step_denoised_campanile.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/gaussian_blurred_campanile.png"
+            alt="gaussian_blurred_campanile.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.5: Diffusion Model Sampling</h3>
+
+    <p>
+      Now, we will generate the images from scratch (pure noise) by setting <code>i_start=0</code>.
+      The image qualities aren't great, which we will fix in the next part.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/5_sampled_images_part1.5.png" alt="5_sampled_images_part1.5.png" />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.6: Classifier-Free Guidance (CFG)</h3>
+
+    <p>To apply CFG, we follow the equation below.</p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \epsilon = \epsilon_u + \gamma(\epsilon_c - \epsilon_u)
+        $
+    </div>
+
+    <p>
+      where $\epsilon$ is our combined noise estimate from $\epsilon_c$, our conditional noise
+      estimate and $\epsilon_u$, our unconditional noise estimate.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/5_sampled_images_cfg_part1.6.png"
+            alt="5_sampled_images_cfg_part1.6.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      We can see that our images are a bit clearer, with finer details and less regions of
+      blurriness.
+    </p>
+
+    <h3>Part 1.7: Image-to-image Translation</h3>
+
+    <p>
+      Now, we can use the SDEdit algorithm to noise the original image by a little and force it back
+      to the manifold without conditioning. We can observe the sequence of edits. In the images
+      below, we can see that the image with <code>i_start = 20</code> has qualities of both the
+      prompt we pass in ("a high quality photo") and the original image.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/campanile_1.7.1.png" alt="campanile_1.7.1.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Berkeley Campanile</h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/campanile_modified.jpg" alt="campanile_modified.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      I added two noise levels, 25 and 30, which generate better results (closer to the
+      corresponding original images) than samller noise levels, as expected. Since these images are
+      much simpler than the ones from the images I got offline, the sequence of images from
+      diffusion below converge to the drawn image much more quickly and sharply.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/hoover_tower_1.7.1.png" alt="hoover_tower_1.7.1.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Hoover Tower</h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/hoover_tower_modified.jpg" alt="hoover_tower_modified.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/green_building_1.7.1.png" alt="green_building_1.7.1.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Green Building</h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/green_building_modified.jpg" alt="green_building_modified.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <h4>Part 1.7.1: Editing Hand-Drawn and Web Images</h4>
+
+    <p>
+      For the hand drawn images, I used the starter code in the Google Colab notebook to draw and
+      process them. Note that the original Hoover Tower and Green Building images are blurry because
+      the code resizes them to 64x64.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/chair_1.7.1.png" alt="chair_1.7.1.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Chair</h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/chair_modified.png" alt="chair_modified.png" />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/lamp_1.7.1.png" alt="lamp_1.7.1.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title">Lamp</h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/lamp_modified.png" alt="lamp_modified.png" />
+        </div>
+      </div>
+    </div>
+
+    <h4>Part 1.7.2: Inpainting</h4>
+
+    <p>Now, we can inpaint part of the image by using a binary mask. Below are 3 examples.</p>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <h4 class="image-title">Original</h4>
+          <img
+            src="media/part_a/campanile_inpainting_original.jpg"
+            alt="campanile_inpainting_original.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <h4 class="image-title">Mask</h4>
+          <img
+            src="media/part_a/campanile_inpainting_mask.jpg"
+            alt="campanile_inpainting_mask.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Hole to Fill</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/campanile_inpainting_to_replace.jpg"
+            alt="campanile_inpainting_to_replace.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/campanile_inpainting_inpainted.png"
+            alt="campanile_inpainting_inpainted.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      For the hoover tower and the plain field images, I used all the same variables for inpainting. The inpainted plain image looks the best and coolest.
+    </p>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <h4 class="image-title">Original</h4>
+          <img
+            src="media/part_a/hoover_tower_inpainting_original.jpg"
+            alt="hoover_tower_inpainting_original.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <h4 class="image-title">Mask</h4>
+          <img
+            src="media/part_a/hoover_tower_inpainting_mask.jpg"
+            alt="hoover_tower_inpainting_mask.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Hole to Fill</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/hoover_tower_inpainting_to_replace.jpg"
+            alt="hoover_tower_inpainting_to_replace.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/hoover_tower_inpainting_inpainted.png"
+            alt="hoover_tower_inpainting_inpainted.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-4">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <h4 class="image-title">Original</h4>
+          <img
+            src="media/part_a/plain_inpainting_original.jpg"
+            alt="plain_inpainting_original.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <h4 class="image-title">Mask</h4>
+          <img
+            src="media/part_a/plain_inpainting_mask.jpg"
+            alt="plain_inpainting_mask.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Hole to Fill</h4>
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/plain_inpainting_to_replace.jpg"
+            alt="plain_inpainting_to_replace.jpg"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/plain_inpainting_inpainted.png"
+            alt="plain_inpainting_inpainted.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Since the green building is not exactly frontward facing, the mask was slightly off centered
+      but the result still looks acceptable.
+    </p>
+
+    <h4>Part 1.7.3: Text-Conditional Image-to-image Translation</h4>
+
+    <p>
+      Here, we can use prompts to condition the image to retain qualities from both the prompt and
+      original image.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/campanile_1.7.3.png" alt="campanile_1.7.3.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Using prompt "a photo of a man", we get the result below. We can see that the image from noise
+      level 20 gives us a man with a different face.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/daniel_craig_1.7.3.png" alt="daniel_craig_1.7.3.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Using prompt "a photo of a dog", we get the result below. The image from noise level 20 has
+      some traces of a dog in the cat's face but retains most of the qualities that make up the cat
+      image.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/cat_1.7.3.png" alt="cat_1.7.3.png" />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.8: Visual Anagrams</h3>
+
+    <p>
+      In this section, we will use our UNet to get two noise estimates and take the average of it.
+      This process will give us visual anagrams. The prompts for the pairs of images are as follows:
+    </p>
+    <ol>
+      <li>"an oil painting of an old man" and "an oil painting of people around a campfire"</li>
+      <li>"a photo of a hipster barista" and "a man wearing a hat"</li>
+      <li>"a rocket ship" and "a photo of a dog"</li>
+    </ol>
+
+    <p>All images are recognizable both rightside up and upside down.</p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/visual_anagram_rightside_up1.png"
+            alt="visual_anagram_rightside_up1.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/visual_anagram_upside_down1.png"
+            alt="visual_anagram_upside_down1.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/visual_anagram_rightside_up2.png"
+            alt="visual_anagram_rightside_up2.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/visual_anagram_upside_down2.png"
+            alt="visual_anagram_upside_down2.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/visual_anagram_rightside_up3.png"
+            alt="visual_anagram_rightside_up3.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_a/visual_anagram_upside_down3.png"
+            alt="visual_anagram_upside_down3.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 1.9: Hybrid Images</h3>
+
+    <p>
+      Similar to visual anagrams, we can use low-pass and high-pass functions to create a hybrid
+      image that looks like one prompt from up close and like another prompt from far away. The
+      prompts for the pairs of images are as follows:
+    </p>
+    <ol>
+      <li>"a lithograph of a skull" and "a lithograph of waterfalls"</li>
+      <li>"a rocket ship" and "a pencil"</li>
+      <li>"a man wearing a hat" and "a lithograph of a skull"</li>
+    </ol>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/hybrid_image1.png" alt="hybrid_image1.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/hybrid_image2.png" alt="hybrid_image2.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_a/hybrid_image3.png" alt="hybrid_image3.png" />
+        </div>
+      </div>
+    </div>
+
+    <h2>Part B: Diffusion Models from Scratch!</h2>
+
+    <h3>Part 1: Training a Single-Step Denoising UNet</h3>
+
+    <p>
+      We can design a UNet architecture consisting of ConvBlocks, DownBlocks, and UpBlocks to train
+      this denoiser on the MNIST dataset. Below are the ablations of simply adding noise to a sample
+      of MNIST images.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/single_step_ablations.png" alt="single_step_ablations.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      We will use a batch size of 256 and hidden dimension size 128 to train over the training
+      dataset for 5 epochs. Our (log) loss is consistent below.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/single_step_log_loss.png" alt="single_step_log_loss.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Below are the results of inference on the training dataset. We can see that after 1 epoch of
+      training, the model isn't able to get as black of a background as the original images. The
+      model after 5 epochs of training does much better with a slight amount of blurriness around
+      the white digits.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_b/single_step_1_epoch_inference.png"
+            alt="single_step_1_epoch_inference.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_b/single_step_5_epoch_inference.png"
+            alt="single_step_5_epoch_inference.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      These are the results on the test set when we vary the $\sigma$ values for noising. The
+      denoised images for $\sigma = 0.8$ and $\sigma = 1.0$ are worse than the results of smaller
+      $\sigma$ values but the digit is still distinguishable.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_b/single_step_test_inference.png"
+            alt="single_step_test_inference.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <h3>Part 2: Training a Diffusion Model</h3>
+
+    <p>Now, we can take advantage of time and classes to train a stronger UNet.</p>
+
+    <h4>Part 2.1-2.3: Adding Time Conditioning to UNet + Training + Sampling</h4>
+
+    <p>
+      We will follow the equation from Part 1.3 in 5A. Using a DDPM schedule, we will be able to use
+      a smaller T (300 vs. 1000) and get better results. We will add 2 fully-connected blocks
+      (FCBlocks) to our UNet, which will take the input of time and play a role in the UpBlocks of
+      the architecture. Below is our training result, which steadily decreases, like the previous
+      part in 5B.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/tc_log_loss.png" alt="tc_log_loss.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now, we can call <code>ddpm_sample</code>, which we implement by following the algorithm from
+      the paper. Note that we set the random seed in each iteration of the reverse diffusion loop in
+      order to maintain reproducibility.
+    </p>
+
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <h4 class="image-title">Sample after 5 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/tc_5_epochs_sample.png" alt="tc_5_epochs_sample.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sample after 20 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/tc_20_epochs_sample.png" alt="tc_20_epochs_sample.png" />
+        </div>
+      </div>
+    </div>
+
+    <h4>Part 2.4-2.5: Adding Class-Conditioning to UNet + Training + Sampling</h4>
+
+    <p>
+      Last but not least, we can condition on the classes in our UNet by adding 2 more FCBlocks that
+      take in class-conditioning vectors <code>c</code> and dropout with probability 10%, in which
+      case we set <code>c</code> to 0. We will follow algorithms from the paper to implement
+      training and sampling. Below is our log loss from training.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/cc_log_loss.png" alt="cc_log_loss.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>We use $\gamma = 5.0$ in CFG for sampling.</p>
+
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <h4 class="image-title">Sample after 5 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/cc_5_epochs_sample.png" alt="cc_5_epochs_sample.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sample after 20 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/cc_20_epochs_sample.png" alt="cc_20_epochs_sample.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      These samples are much clearer and refined than time-conditioned as we can see thicker strokes
+      and more distinguishable digits. There are some stray marks but they do not affect the overall
+      image of the digits.
+    </p>
+
+    <h3>What I learned</h3>
+
+    <p>
+      It was nice to dive into the deep learning of this project and see how we can iteratively make
+      improvements (and understand the rationale) to our model and algorithms to get better results.
+    </p>
+
+    <p></p>
+  </body>
+</html>
