@@ -619,6 +619,76 @@
 
     <h3>Part 1: Training a Single-Step Denoising UNet</h3>
 
+    <p>
+      We can design a UNet architecture consisting of ConvBlocks, DownBlocks, and UpBlocks to train
+      this denoiser on the MNIST dataset. Below are the ablations of simply adding noise to a sample
+      of MNIST images.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/single_step_ablations.png" alt="single_step_ablations.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      We will use a batch size of 256 and hidden dimension size 128 to train over the training
+      dataset for 5 epochs. Our (log) loss is consistent below.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/single_step_log_loss.png" alt="single_step_log_loss.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Below are the results of inference on the training dataset. We can see that after 1 epoch of
+      training, the model isn't able to get as black of a background as the original images. The
+      model after 5 epochs of training does much better with a slight amount of blurriness around
+      the white digits.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_b/single_step_1_epoch_inference.png"
+            alt="single_step_1_epoch_inference.png"
+          />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_b/single_step_5_epoch_inference.png"
+            alt="single_step_5_epoch_inference.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      These are the results on the test set when we vary the $\sigma$ values for noising. The
+      denoised images for $\sigma = 0.8$ and $\sigma = 1.0$ are worse than the results of smaller
+      $\sigma$ values but the digit is still distinguishable.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img
+            src="media/part_b/single_step_test_inference.png"
+            alt="single_step_test_inference.png"
+          />
+        </div>
+      </div>
+    </div>
+
     <h3>Part 2: Training a Diffusion Model</h3>
 
     <h4>2.1-2.3: Adding Time Conditioning to UNet + Training + Sampling</h4>
