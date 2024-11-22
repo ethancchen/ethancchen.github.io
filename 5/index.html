@@ -162,7 +162,20 @@
 
     <h3>Part 1.4: Iterative Denoising</h3>
 
-    <p></p>
+    <p>
+      To improve the result from the one-step denoising, we can iteratively denoise. We can use 1000
+      timesteps and skip with strides, in this case we use a stride of 30. We can follow the
+      equation below and start at <code>i_start = 10</code>.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        x_{t^\prime} = \frac{\sqrt{\bar{\alpha}_{t^\prime}}\beta_t}{1-\bar{\alpha}_t}x_0 + \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t^\prime})}{1-\bar{\alpha}_t}x_t + v_\sigma
+        $
+    </div>
+
+    <br />
 
     <div class="image-container-5">
       <div class="image-item">
