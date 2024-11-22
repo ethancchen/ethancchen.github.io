@@ -44,6 +44,43 @@
 
     <p>This project aims to implement and deploy diffusion models to generate images.</p>
 
+    <p>
+      I use random seed 42 for the entire 5A. Using the 3 text prompts provided, we get the image
+      output from the model below. Overall, the quality of each image is very high with fine
+      details, like many vibrant colors and sharp contrast, and little blurriness. Using a larger
+      <code>num_inference_steps</code> gave me more realistic results with brighter colors,
+      especially "a man wearing a hat". Using a smaller <code>num_inference_steps</code> gave me
+      fewer details like "a rocket ship" with 10 steps and slightly more blurriness like "an oil
+      painting of a snowy mountain village" with 10 steps even though "a man wearing a hat" with 10
+      steps was a decently realistic image. We can see some variance and the trend based on
+      <code>num_inference_steps</code> is not always direct.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title"><code>num_inference_steps=10</code></h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/stage1_stage2_steps_10.png" alt="stage1_stage2_steps_10.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title"><code>num_inference_steps=20</code></h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/stage1_stage2_steps_20.png" alt="stage1_stage2_steps_20.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <h4 class="image-title"><code>num_inference_steps=40</code></h4>
+        <div class="image-wrapper">
+          <img src="media/part_a/stage1_stage2_steps_40.png" alt="stage1_stage2_steps_40.png" />
+        </div>
+      </div>
+    </div>
+
     <h2>Part 1: Sampling Loops</h2>
 
     <h3>Part 1.1: Implementing the Forward Process</h3>
@@ -432,7 +469,8 @@
     </div>
 
     <p>
-      For the hoover tower and the plain field images, I used all the same variables for inpainting. The inpainted plain image looks the best and coolest.
+      For the hoover tower and the plain field images, I used all the same variables for inpainting.
+      The inpainted plain image looks the best and coolest.
     </p>
 
     <div class="image-container-4">
@@ -486,10 +524,7 @@
       <div class="image-item">
         <div class="image-wrapper">
           <h4 class="image-title">Mask</h4>
-          <img
-            src="media/part_a/plain_inpainting_mask.jpg"
-            alt="plain_inpainting_mask.jpg"
-          />
+          <img src="media/part_a/plain_inpainting_mask.jpg" alt="plain_inpainting_mask.jpg" />
         </div>
       </div>
       <div class="image-item">
