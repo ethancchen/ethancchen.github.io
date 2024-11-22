@@ -240,7 +240,10 @@
 
     <h3>Part 1.5: Diffusion Model Sampling</h3>
 
-    <p></p>
+    <p>
+      Now, we will generate the images from scratch (pure noise) by setting <code>i_start=0</code>.
+      The image qualities aren't great, which we will fix in the next part.
+    </p>
 
     <div class="image-container-1-wide">
       <div class="image-item">
@@ -252,7 +255,19 @@
 
     <h3>Part 1.6: Classifier-Free Guidance (CFG)</h3>
 
-    <p></p>
+    <p>To apply CFG, we follow the equation below.</p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \epsilon = \epsilon_u + \gamma(\epsilon_c - \epsilon_u)
+        $
+    </div>
+
+    <p>
+      where $\epsilon$ is our combined noise estimate from $\epsilon_c$, our conditional noise
+      estimate and $\epsilon_u$, our unconditional noise estimate.
+    </p>
 
     <div class="image-container-1-wide">
       <div class="image-item">
@@ -265,7 +280,19 @@
       </div>
     </div>
 
+    <p>
+      We can see that our images are a bit clearer, with finer details and less regions of
+      blurriness.
+    </p>
+
     <h3>Part 1.7: Image-to-image Translation</h3>
+
+    <p>
+      Now, we can use the SDEdit algorithm to noise the original image by a little and force it back
+      to the manifold without conditioning. We can observe the sequence of edits. In the images
+      below, we can see that the image with <code>i_start = 20</code> has qualities of both the
+      prompt we pass in ("a high quality photo") and the original image.
+    </p>
 
     <div class="image-container-1-wide">
       <div class="image-item">
@@ -285,7 +312,9 @@
 
     <p>
       I added two noise levels, 25 and 30, which generate better results (closer to the
-      corresponding original images) than samller noise levels, as expected.
+      corresponding original images) than samller noise levels, as expected. Since these images are
+      much simpler than the ones from the images I got offline, the sequence of images from
+      diffusion below converge to the drawn image much more quickly and sharply.
     </p>
 
     <div class="image-container-1-wide">
