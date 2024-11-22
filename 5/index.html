@@ -691,7 +691,45 @@
 
     <h3>Part 2: Training a Diffusion Model</h3>
 
+    <p>Now, we can take advantage of time and classes to train a stronger UNet.</p>
+
     <h4>2.1-2.3: Adding Time Conditioning to UNet + Training + Sampling</h4>
+
+    <p>
+      We will follow the equation from Part 1.3 in 5A. Using a DDPM schedule, we will be able to use
+      a smaller T (300 vs. 1000) and get better results. We will add 2 fully-connected blocks
+      (FCBlocks) to our UNet, which will take the input of time and play a role in the UpBlocks of
+      the architecture. Below is our training result, which steadily decreases, like the previous
+      part in 5B.
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/part_b/tc_log_loss.png" alt="tc_log_loss.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now, we can call <code>ddpm_sample</code>, which we implement by following the algorithm from
+      the paper.
+    </p>
+
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <h4 class="image-title">Sample after 5 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/tc_5_epochs_sample.png" alt="tc_5_epochs_sample.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Sample after 20 epochs of training</h4>
+        <div class="image-wrapper">
+          <img src="media/part_b/tc_20_epochs_sample.png" alt="tc_20_epochs_sample.png" />
+        </div>
+      </div>
+    </div>
 
     <h4>2.4-2.5: Adding Class-Conditioning to UNet + Training + Sampling</h4>
 

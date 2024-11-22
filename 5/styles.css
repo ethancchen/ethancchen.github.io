@@ -19,8 +19,8 @@ code {
 }
 
 .large-mathjax {
-    font-size: 1.5em;
-    text-align: center;
+  font-size: 1.5em;
+  text-align: center;
 }
 
 .image-container-1 {
@@ -46,6 +46,16 @@ code {
   grid-template-columns: repeat(auto-fit, minmax(calc(50% - 10px), 1fr));
   gap: 20px;
   max-width: 60%;
+  justify-content: center;
+  margin: 0 auto;
+  justify-items: center;
+}
+
+.image-container-2-wide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(50% - 10px), 1fr));
+  gap: 20px;
+  max-width: 80%;
   justify-content: center;
   margin: 0 auto;
   justify-items: center;
