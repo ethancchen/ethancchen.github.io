@@ -560,7 +560,10 @@
 
     <h3>Part 1.8: Visual Anagrams</h3>
 
-    <p>The prompts for the pairs of images are as follows:</p>
+    <p>
+      In this section, we will use our UNet to get two noise estimates and take the average of it.
+      This process will give us visual anagrams. The prompts for the pairs of images are as follows:
+    </p>
     <ol>
       <li>"an oil painting of an old man" and "an oil painting of people around a campfire"</li>
       <li>"a photo of a hipster barista" and "a man wearing a hat"</li>
@@ -622,7 +625,11 @@
 
     <h3>Part 1.9: Hybrid Images</h3>
 
-    <p>The prompts for the pairs of images are as follows:</p>
+    <p>
+      Similar to visual anagrams, we can use low-pass and high-pass functions to create a hybrid
+      image that looks like one prompt from up close and like another prompt from far away. The
+      prompts for the pairs of images are as follows:
+    </p>
     <ol>
       <li>"a lithograph of a skull" and "a lithograph of waterfalls"</li>
       <li>"a rocket ship" and "a pencil"</li>
