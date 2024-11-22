@@ -48,6 +48,20 @@
 
     <h3>Part 1.1: Implementing the Forward Process</h3>
 
+    <p>
+      We start by implementing the forward function to add noise to a clean image, which follows the
+      equation below.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t\epsilon} \text{ where } \epsilon \sim N(0,1)
+        $
+    </div>
+
+    <br />
+
     <div class="image-container-4">
       <div class="image-item">
         <h4 class="image-title">Berkeley Campanile</h4>
@@ -71,8 +85,6 @@
         </div>
       </div>
     </div>
-
-    <p></p>
 
     <h3>Part 1.2: Classical Denoising</h3>
 
