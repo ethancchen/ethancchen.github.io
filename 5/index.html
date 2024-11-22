@@ -713,7 +713,8 @@
 
     <p>
       Now, we can call <code>ddpm_sample</code>, which we implement by following the algorithm from
-      the paper.
+      the paper. Note that we set the random seed in each iteration of the reverse diffusion loop in
+      order to maintain reproducibility.
     </p>
 
     <div class="image-container-2-wide">
