@@ -179,11 +179,124 @@
 
     <h2>Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
 
-    <p>Sinusoidal positional encoding formulas can be computed with the formulas below</p>
+    <p>
+      Now, we can use a neural raidance field to represent images in the 3D space. We will use the
+      Lego scene (200 x 200 images) from the original NeRF paper.
+    </p>
 
-    <p>For our neural networks, to get the output dimensions from the positional encoding</p>
+    <p>
+      To convert camera to world coordinates, we use the following equation, where subscript $w$
+      coordinates are in the world space, subscript $c$ coordinates are in the camera space,
+      $\mathbf R_{3x3}$ is our rotation matrix, and $\mathbf t$ is our translation vector:
+    </p>
 
-    <p>Finally, we can make a GIF by transforming each of the images/cameras with our trained model.</p>
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \begin{bmatrix}
+            x_c \\
+            y_c \\
+            z_c \\
+            1
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \mathbf R_{3x3} & \mathbf t \\
+            \mathbf 0_{1x3} & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+            x_w \\
+            y_w \\
+            z_w \\
+            1
+        \end{bmatrix}
+        $
+    </div>
+
+    <p>
+      To convert pixel to camera coordinates, we use this intrinsic matrix $\mathbf K$, where $f_x$
+      and $f_y$ is our focal length and $\sigma_x$ and $\sigma_y$ (the midpoints of the image width
+      and height, respectively)$ is our principal point.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \mathbf K =
+        \begin{bmatrix}
+            f_x & 0 & \sigma_x \\
+            0 & f_y & \sigma_y \\
+            0 & 0 & 1 \\
+        \end{bmatrix}
+        $
+    </div>
+
+    <p>
+      To convert pixel to ray (and get the ray origins and directions), we use the following
+      formulas
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \begin{align*}
+            \mathbf r_o = -\mathbf R_{3x3}^{-1}\mathbf t \\
+            \mathbf r_d = \frac{\mathbf X_w - \mathbf r_o}{{\lvert\lvert \mathbf X_w - \mathbf r_o \rvert\rvert}_2}
+        \end{align*}
+        $
+    </div>
+
+    <p>
+      To sample rays, we can first discretize them into samples in 3D space by uniformly creating
+      them along the rays. In the process, we introduce small perturbations only during training so
+      that we touch every point along the ray.
+    </p>
+
+    <p>
+      With this, we can create a <code>viser</code> server and get the following two images to
+      verify we have implemented everything so far correctly.
+    </p>
+
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <h4 class="image-title">100 randomly sampled rays (total) across all cameras</h4>
+        <div class="image-wrapper">
+          <img src="media/100_randomly_sampled_rays.png" alt="100_randomly_sampled_rays.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">100 sampled rays (with point clouds) from one camera</h4>
+        <div class="image-wrapper">
+          <img src="media/100_sampled_rays_one_camera.png" alt="100_sampled_rays_one_camera.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now, we can train our model, using volume rendering - adding contribution of small intervals
+      to the final color like shown in the formula below, where $\mathbf c_i$ is .
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \hat{C}(\mathbf r) = \sum_{i=1}^NT_i(1-\exp(-\sigma_i\delta_i))\mathbf c_i, \quad \text{where } T_i = \exp\left(-\sum_{j=1}^{i-1}\sigma_j\delta_j\right)
+        $
+    </div>
+
+    <p>Our architecture is as follows.</p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/mlp_nerf.png" alt="mlp_nerf.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Finally, we can make a GIF by transforming each of the images/cameras with our trained model.
+    </p>
 
     <div class="image-container-1">
       <div class="image-item">
