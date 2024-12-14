@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [
+          ["$", "$"],
+          ["\\(", "\\)"],
+        ],
+      },
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+  ></script>
+  <head>
+    <title>Final Proj</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Final Project - Neural Radiance Field!</h1>
+
+    <h2>Part 1 - The Power of Diffusion Models!</h2>
+
+    <h3>By Ethan Chen</h3>
+
+    <h2>Introduction</h2>
+
+    <p>
+      I chose to do the NeRF project for my final project, which aims to train neural networks to
+      generate 3D objects from 2D images through an interpolation approach between the scenes.
+    </p>
+
+    <h2>Part 1: Fit a Neural Field to a 2D Image</h2>
+
+    <p>
+      We first start with a neural field that fits and represents a 2D image. The Multilayer
+      Perception (MLP) network usese Sinusoidal Positional Encoding (PE) that maps the u, v
+      coordinates of the image to rgb in 2D. The architecture is as follows:
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/mlp_img.jpg" alt="mlp_img.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now, we do a hyperparameter sweep on the hyperparameters L, which is the highest frequency
+      level in PE, and the learning rate of the MLP.
+    </p>
+
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/psnr_tune_hyperparam_L.png" alt="psnr_tune_hyperparam_L.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/psnr_tune_hyperparam_lr.png" alt="psnr_tune_hyperparam_lr.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Observing these two graphs, $L = 10$ and $\text{learning_rate} = 0.025$ achieve the highest
+      PSNRs. Now, we can use these values to train the model and generate reconstructed images
+      throughout training.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Original Fox</h4>
+        <div class="image-wrapper">
+          <img src="media/fox.jpg" alt="fox.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/fox_psnr.png" alt="fox_psnr.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-5">
+      <div class="image-item">
+        <h4 class="image-title">Iteration 100</h4>
+        <div class="image-wrapper">
+          <img src="media/fox_iter_100.png" alt="fox_iter_100.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 200</h4>
+        <div class="image-wrapper">
+          <img src="media/fox_iter_200.png" alt="fox_iter_200.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 500</h4>
+        <div class="image-wrapper">
+          <img src="media/fox_iter_500.png" alt="fox_iter_500.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 1000</h4>
+        <div class="image-wrapper">
+          <img src="media/fox_iter_1000.png" alt="fox_iter_1000.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 3000</h4>
+        <div class="image-wrapper">
+          <img src="media/fox_iter_3000.png" alt="fox_iter_3000.png" />
+        </div>
+      </div>
+    </div>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Original Dog</h4>
+        <div class="image-wrapper">
+          <img src="media/dog_high_res.jpg" alt="dog_high_res.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/dog_psnr.png" alt="dog_psnr.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-5">
+      <div class="image-item">
+      <h4 class="image-title">Iteration 100</h4>
+        <div class="image-wrapper">
+          <img src="media/dog_iter_100.png" alt="dog_iter_100.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 200</h4>
+        <div class="image-wrapper">
+          <img src="media/dog_iter_200.png" alt="dog_iter_200.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 500</h4>
+        <div class="image-wrapper">
+          <img src="media/dog_iter_500.png" alt="dog_iter_500.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 1000</h4>
+        <div class="image-wrapper">
+          <img src="media/dog_iter_1000.png" alt="dog_iter_1000.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 3000</h4>
+        <div class="image-wrapper">
+          <img src="media/dog_iter_3000.png" alt="dog_iter_3000.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The training took much longer for my dog image than the fox one because the dog is 3072 x 3072
+      while the fox is only 689 x 1024. We can see the our neural network learns quite quickly how
+      to reconstruct the image as it initially is able to get most of the details, except from some
+      blur, but within a few hundred iterations, the reconstructed image very closely resembles the
+      original one.
+    </p>
+
+    <h2>Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
+
+    <p>
+      Now, we can use a neural raidance field to represent images in the 3D space. We will use the
+      Lego scene (200 x 200 images) from the original NeRF paper.
+    </p>
+
+    <p>
+      To convert camera to world coordinates, we use the following equation, where subscript $w$
+      coordinates are in the world space, subscript $c$ coordinates are in the camera space,
+      $\mathbf R_{3x3}$ is our rotation matrix, and $\mathbf t$ is our translation vector:
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \begin{bmatrix}
+            x_c \\
+            y_c \\
+            z_c \\
+            1
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \mathbf R_{3x3} & \mathbf t \\
+            \mathbf 0_{1x3} & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+            x_w \\
+            y_w \\
+            z_w \\
+            1
+        \end{bmatrix}
+        $
+    </div>
+
+    <p>
+      To convert pixel to camera coordinates, we use this intrinsic matrix $\mathbf K$, where $f_x$
+      and $f_y$ is our focal length and $\sigma_x$ and $\sigma_y$ (the midpoints of the image width
+      and height, respectively)$ is our principal point.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \mathbf K =
+        \begin{bmatrix}
+            f_x & 0 & \sigma_x \\
+            0 & f_y & \sigma_y \\
+            0 & 0 & 1 \\
+        \end{bmatrix}
+        $
+    </div>
+
+    <p>
+      To convert pixel to ray (and get the ray origins and directions), we use the following
+      formulas
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \begin{align*}
+            \mathbf r_o = -\mathbf R_{3x3}^{-1}\mathbf t \\
+            \mathbf r_d = \frac{\mathbf X_w - \mathbf r_o}{{\lvert\lvert \mathbf X_w - \mathbf r_o \rvert\rvert}_2}
+        \end{align*}
+        $
+    </div>
+
+    <p>
+      To sample rays, we can first discretize them into samples in 3D space by uniformly creating
+      them along the rays. In the process, we introduce small perturbations only during training so
+      that we touch every point along the ray.
+    </p>
+
+    <p>
+      With this, we can create a <code>viser</code> server and get the following two images to
+      verify we have implemented everything so far correctly.
+    </p>
+
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <h4 class="image-title">100 randomly sampled rays (total) across all cameras</h4>
+        <div class="image-wrapper">
+          <img src="media/100_randomly_sampled_rays.png" alt="100_randomly_sampled_rays.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">100 sampled rays (with point clouds) from one camera</h4>
+        <div class="image-wrapper">
+          <img src="media/100_sampled_rays_one_camera.png" alt="100_sampled_rays_one_camera.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now, we can train our model, using volume rendering <code>volrend</code> - adding contribution
+      of small intervals to the final color like shown in the formula below, where $\mathbf c_i$ is
+      color at location $i$ we get from our model, $T_i$ is the probability of the ray not
+      terminating before $i$, and $1-e^{-sigma_i\delta_i}$ is the probability of terminating at $i$.
+    </p>
+
+    <!-- prettier-ignore -->
+    <div class="large-mathjax">
+        $
+        \hat{C}(\mathbf r) = \sum_{i=1}^NT_i(1-\exp(-\sigma_i\delta_i))\mathbf c_i, \quad \text{where } T_i = \exp\left(-\sum_{j=1}^{i-1}\sigma_j\delta_j\right)
+        $
+    </div>
+
+    <p>Our architecture is as follows.</p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/mlp_nerf.png" alt="mlp_nerf.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      During training our model, we can visualize the model's predicted image on one of the
+      validation camera views.
+    </p>
+
+    <div class="image-container-5">
+      <div class="image-item">
+        <h4 class="image-title">Iteration 0</h4>
+        <div class="image-wrapper">
+          <img src="media/lego_iter_0.png" alt="lego_iter_0.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 100</h4>
+        <div class="image-wrapper">
+          <img src="media/lego_iter_100.png" alt="lego_iter_100.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 200</h4>
+        <div class="image-wrapper">
+          <img src="media/lego_iter_200.png" alt="lego_iter_200.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 400</h4>
+        <div class="image-wrapper">
+          <img src="media/lego_iter_400.png" alt="lego_iter_400.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Iteration 800</h4>
+        <div class="image-wrapper">
+          <img src="media/lego_iter_800.png" alt="lego_iter_800.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Finally, we can make a GIF by transforming each of the images/cameras with our trained model.
+    </p>
+
+    <div class="image-container-1">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/lego_black.gif" alt="lego_black.gif" />
+        </div>
+      </div>
+    </div>
+
+    <h2>Bells and Whistles</h2>
+
+    <p>
+      For the Bells and Whistles, I chose to do "Render the Lego video with a different background
+      color than black..."
+    </p>
+
+    <p>
+      To achieve this, we can modify the <code>volrend</code> function to take in a background color
+      of a tensor with three values for RGB. Previously, <code>volrend</code> didn't explicitly add
+      additional background color contribution after getting the colors from our density and RGBs so
+      it's the same as setting the background color to black, which is rgb 0, 0, 0. We will add this
+      code to the end: compute the remaining transmittance and add the color contribution to the
+      original color we previously got from the original <code>volrend</code>.
+    </p>
+
+    <p>This are two resulting GIFs with a background color of white and purple.</p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">White</h4>
+        <div class="image-wrapper">
+          <img src="media/lego_white.gif" alt="lego_white.gif" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Purple</h4>
+        <div class="image-wrapper">
+          <img src="media/lego_purple.gif" alt="lego_purple.gif" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
