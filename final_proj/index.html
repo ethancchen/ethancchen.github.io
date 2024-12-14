@@ -49,7 +49,102 @@
 
     <h2>Part 1: Fit a Neural Field to a 2D Image</h2>
 
-    <h2>Part 2: Fit a Neural Radiance Field from Multi-view Images</h3>
+    <div class="image-container-2-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/psnr_tune_hyperparam_L.png" alt="psnr_tune_hyperparam_L.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/psnr_tune_hyperparam_lr.png" alt="psnr_tune_hyperparam_lr.png" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Observing these two graphs, $L = 10$ and $\text{learning_rate} = 0.025$ achieve the highest
+      PSNRs. Now, we can use these values to train the model and generate reconstructed images
+      throughout training.
+    </p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">Original Fox</h4>
+        <div class="image-wrapper">
+          <img src="media/fox.jpg" alt="fox.jpg" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/fox_psnr.png" alt="fox_psnr.png" />
+        </div>
+      </div>
+    </div>
+    <div class="image-container-5">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/fox_iter_100.png" alt="fox_iter_100.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/fox_iter_200.png" alt="fox_iter_200.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/fox_iter_500.png" alt="fox_iter_500.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/fox_iter_1000.png" alt="fox_iter_1000.png" />
+        </div>
+      </div>
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/fox_iter_3000.png" alt="fox_iter_3000.png" />
+        </div>
+      </div>
+    </div>
+
+    <h2>Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
+
+    <p>Sinusoidal positional encoding formulas can be computed with the formulas below</p>
+
+    <p>For our neural networks, to get the output dimensions from the positional encoding</p>
+
+    <h2>Bells and Whistles</h2>
+
+    <p>
+      For the Bells and Whistles, I chose to do "Render the Lego video with a different background
+      color than black..."
+    </p>
+
+    <p>
+      To achieve this, we can modify the <code>volrend</code> function to take in a background color
+      of a tensor with three values for RGB. We will add this code to the end: compute the remaining
+      transmittance and add the color contribution to the original color we previously got from the
+      original <code>volrend</code>.
+    </p>
+
+    <p>This are two resulting GIFs with a background color of white and purple.</p>
+
+    <div class="image-container-2">
+      <div class="image-item">
+        <h4 class="image-title">White</h4>
+        <div class="image-wrapper">
+          <img src="media/final_out_white.gif" alt="final_out_white.gif" />
+        </div>
+      </div>
+      <div class="image-item">
+        <h4 class="image-title">Purple</h4>
+        <div class="image-wrapper">
+          <img src="media/final_out_purple.gif" alt="final_out_purple.gif" />
+        </div>
+      </div>
+    </div>
 
     <h3>What I learned</h3>
 
