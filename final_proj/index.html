@@ -52,7 +52,10 @@
     <p>
       We first start with a neural field that fits and represents a 2D image. The Multilayer
       Perception (MLP) network usese Sinusoidal Positional Encoding (PE) that maps the u, v
-      coordinates of the image to rgb in 2D. The architecture is as follows:
+      coordinates of the image to rgb in 2D. The architecture is shown below - given a 2D input $x$,
+      we first compute the PE, then have 3 linear layers with hidden dimension 256 followed by ReLU,
+      then one final linear layer with hidden dimension 256, and finally a sigmoid at the end to
+      give us the rgb output in 3D.
     </p>
 
     <div class="image-container-1-wide">
@@ -83,7 +86,8 @@
 
     <p>
       Observing these two graphs, $L = 10$ and $\text{learning_rate} = 0.025$ achieve the highest
-      PSNRs. Now, we can use these values to train the model and generate reconstructed images
+      PSNRs. Now, we can use these values, along with hidden dimension 256 and batch size 10,000 (as
+      described in the spec and architecture), to train the model and generate reconstructed images
       throughout training.
     </p>
 
@@ -345,7 +349,8 @@
     </div>
 
     <p>
-      Here is the PSNR of our model throughout training. We can see that it reaches 23 PSNR around 300 iterations.
+      Here is the PSNR of our model throughout training. We can see that it reaches 23 PSNR around
+      300 iterations.
     </p>
     <div class="image-container-1">
       <div class="image-item">
