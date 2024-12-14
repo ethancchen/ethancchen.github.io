@@ -273,8 +273,10 @@
     </div>
 
     <p>
-      Now, we can train our model, using volume rendering - adding contribution of small intervals
-      to the final color like shown in the formula below, where $\mathbf c_i$ is .
+      Now, we can train our model, using volume rendering <code>volrend</code> - adding contribution
+      of small intervals to the final color like shown in the formula below, where $\mathbf c_i$ is
+      color at location $i$ we get from our model, $T_i$ is the probability of the ray not
+      terminating before $i$, and $1-e^{-sigma_i\delta_i}$ is the probability of terminating at $i$.
     </p>
 
     <!-- prettier-ignore -->
