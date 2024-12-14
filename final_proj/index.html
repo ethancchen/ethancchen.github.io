@@ -317,9 +317,11 @@
 
     <p>
       To achieve this, we can modify the <code>volrend</code> function to take in a background color
-      of a tensor with three values for RGB. We will add this code to the end: compute the remaining
-      transmittance and add the color contribution to the original color we previously got from the
-      original <code>volrend</code>.
+      of a tensor with three values for RGB. Previously, <code>volrend</code> didn't explicitly add
+      additional background color contribution after getting the colors from our density and RGBs so
+      it's the same as setting the background color to black, which is rgb 0, 0, 0. We will add this
+      code to the end: compute the remaining transmittance and add the color contribution to the
+      original color we previously got from the original <code>volrend</code>.
     </p>
 
     <p>This are two resulting GIFs with a background color of white and purple.</p>
