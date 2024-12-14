@@ -49,6 +49,25 @@
 
     <h2>Part 1: Fit a Neural Field to a 2D Image</h2>
 
+    <p>
+      We first start with a neural field that fits and represents a 2D image. The Multilayer
+      Perception (MLP) network usese Sinusoidal Positional Encoding (PE) that maps the u, v
+      coordinates of the image to rgb in 2D. The architecture is as follows:
+    </p>
+
+    <div class="image-container-1-wide">
+      <div class="image-item">
+        <div class="image-wrapper">
+          <img src="media/mlp_img.jpg" alt="mlp_img.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Now, we do a hyperparameter sweep on the hyperparameters L, which is the highest frequency
+      level in PE, and the learning rate of the MLP.
+    </p>
+
     <div class="image-container-2-wide">
       <div class="image-item">
         <div class="image-wrapper">
@@ -149,6 +168,14 @@
         </div>
       </div>
     </div>
+
+    <p>
+      The training took much longer for my dog image than the fox one because the dog is 3072 x 3072
+      while the fox is only 689 x 1024. We can see the our neural network learns quite quickly how
+      to reconstruct the image as it initially is able to get most of the details, except from some
+      blur, but within a few hundred iterations, the reconstructed image very closely resembles the
+      original one.
+    </p>
 
     <h2>Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
 
