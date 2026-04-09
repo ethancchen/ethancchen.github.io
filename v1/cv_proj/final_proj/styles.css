@@ -1,0 +1,112 @@
+body {
+  font-family: Verdana, sans-serif;
+  font-size: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* CSS for `code` taken from past student Jeffrey Tan's submission */
+code {
+  background-color: aliceblue;
+  border-radius: 0.25rem;
+  padding: 0.15rem;
+  color: #0098f1;
+}
+
+.h3-centered {
+  text-align: center;
+}
+
+.large-mathjax {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.image-container-1 {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.image-container-1-wide {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.image-container-1 .image-item {
+  width: 100%;
+}
+
+.image-container-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(50% - 10px), 1fr));
+  gap: 20px;
+  max-width: 60%;
+  justify-content: center;
+  margin: 0 auto;
+  justify-items: center;
+}
+
+.image-container-2-wide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(50% - 10px), 1fr));
+  gap: 20px;
+  max-width: 80%;
+  justify-content: center;
+  margin: 0 auto;
+  justify-items: center;
+}
+
+.image-container-2 .larger-image {
+  width: 300px;
+  height: auto;
+}
+
+.image-container-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 100%;
+}
+
+.image-container-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 100%;
+}
+
+.image-container-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+  max-width: 100%;
+}
+
+.image-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-title {
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: #333;
+}
+
+.image-wrapper {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
